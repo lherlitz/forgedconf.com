@@ -113,16 +113,15 @@
     overflow: hidden;
   }
 
-  /* Pixel art castle silhouette */
+  /* Pixel art castle background */
   .hero-bg {
     position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 220px;
-    opacity: 0.12;
-    background-image: url("data:image/svg+xml,%3Csvg width='1200' height='220' xmlns='http://www.w3.org/2000/svg' shape-rendering='crispEdges'%3E%3Cg fill='%2315803d'%3E%3Crect x='100' y='110' width='40' height='110'/%3E%3Crect x='140' y='90' width='20' height='20'/%3E%3Crect x='180' y='90' width='20' height='20'/%3E%3Crect x='220' y='90' width='20' height='20'/%3E%3Crect x='260' y='90' width='20' height='20'/%3E%3Crect x='260' y='70' width='20' height='20'/%3E%3Crect x='300' y='110' width='40' height='110'/%3E%3Crect x='400' y='70' width='60' height='150'/%3E%3Crect x='460' y='50' width='20' height='20'/%3E%3Crect x='480' y='30' width='20' height='40'/%3E%3Crect x='500' y='50' width='20' height='20'/%3E%3Crect x='520' y='70' width='60' height='150'/%3E%3Crect x='600' y='90' width='20' height='130'/%3E%3Crect x='620' y='70' width='40' height='150'/%3E%3Crect x='660' y='90' width='20' height='130'/%3E%3Crect x='760' y='110' width='40' height='110'/%3E%3Crect x='800' y='90' width='20' height='20'/%3E%3Crect x='840' y='90' width='20' height='20'/%3E%3Crect x='880' y='110' width='40' height='110'/%3E%3C/g%3E%3C/svg%3E");
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("castle-bg.png");
     background-position: center bottom;
     background-repeat: no-repeat;
-    background-size: 80% 220px;
+    background-size: cover;
+    opacity: 0.35;
   }
 
   /* Floating pixel particles */
