@@ -121,7 +121,14 @@
     background-position: center bottom;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.35;
+    opacity: 0.15;
+  }
+  /* Dark gradient overlay to keep text readable over castle */
+  .hero-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(10,18,10,0.7) 0%, rgba(10,18,10,0.5) 50%, rgba(10,18,10,0.85) 100%);
+    z-index: 1;
   }
 
   /* Floating pixel particles */
@@ -626,6 +633,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-particles">
     <div class="particle"></div><div class="particle"></div><div class="particle"></div>
     <div class="particle"></div><div class="particle"></div><div class="particle"></div>
