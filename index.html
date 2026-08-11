@@ -200,12 +200,12 @@
 
   /* Knight forge animation */
   .knight-stage {
-    width: 120px;
-    height: 120px;
+    width: 180px;
+    height: 180px;
     margin: 0 auto 1.5rem;
     position: relative;
   }
-  .knight-stage svg { width: 100%; height: 100%; image-rendering: pixelated; }
+  .knight-stage svg { width: 100%; height: 100%; image-rendering: pixelated; filter: drop-shadow(0 0 8px rgba(74,222,128,0.3)); }
 
   /* Knight body parts — each is a group we can transform */
   .knight-arm-hammer {
@@ -699,78 +699,82 @@
 
     <div class="knight-stage">
       <svg viewBox="0 0 100 100" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ground/platform -->
+        <rect x="20" y="84" width="60" height="3" fill="#15803d" opacity="0.5"/>
+
         <!-- Anvil -->
-        <rect x="35" y="60" width="30" height="6" fill="#22c55e"/>
-        <rect x="33" y="66" width="34" height="4" fill="#15803d"/>
-        <rect x="40" y="70" width="20" height="6" fill="#15803d"/>
-        <rect x="38" y="76" width="24" height="4" fill="#0a3d1a"/>
+        <rect x="35" y="60" width="30" height="6" fill="#6bff6b"/>
+        <rect x="33" y="66" width="34" height="4" fill="#4ade80"/>
+        <rect x="40" y="70" width="20" height="6" fill="#22c55e"/>
+        <rect x="38" y="76" width="24" height="4" fill="#15803d"/>
 
         <!-- Knight body (static parts) -->
         <!-- Legs -->
-        <rect x="36" y="70" width="6" height="10" fill="#22c55e"/>
-        <rect x="58" y="70" width="6" height="10" fill="#22c55e"/>
+        <rect x="36" y="70" width="6" height="10" fill="#6bff6b"/>
+        <rect x="58" y="70" width="6" height="10" fill="#6bff6b"/>
         <!-- Boots -->
-        <rect x="34" y="80" width="10" height="5" fill="#15803d"/>
-        <rect x="56" y="80" width="10" height="5" fill="#15803d"/>
-        <!-- Torso -->
-        <rect x="36" y="50" width="28" height="22" fill="#4ade80"/>
-        <rect x="36" y="50" width="28" height="3" fill="#22c55e"/>
+        <rect x="34" y="80" width="10" height="5" fill="#22c55e"/>
+        <rect x="56" y="80" width="10" height="5" fill="#22c55e"/>
+        <!-- Torso (brightest) -->
+        <rect x="36" y="50" width="28" height="22" fill="#6bff6b"/>
+        <rect x="36" y="50" width="28" height="3" fill="#b8e6b8"/>
         <!-- Belt -->
         <rect x="36" y="68" width="28" height="3" fill="#15803d"/>
         <!-- Head + helmet -->
-        <rect x="40" y="38" width="20" height="14" fill="#22c55e"/>
-        <rect x="40" y="38" width="20" height="3" fill="#4ade80"/>
+        <rect x="40" y="38" width="20" height="14" fill="#6bff6b"/>
+        <rect x="40" y="38" width="20" height="3" fill="#b8e6b8"/>
         <rect x="42" y="44" width="16" height="3" fill="#0a3d1a"/>
-        <!-- Helmet plume -->
-        <rect x="46" y="34" width="8" height="5" fill="#6bff6b"/>
+        <!-- Helmet plume (brightest green) -->
+        <rect x="46" y="32" width="8" height="6" fill="#6bff6b"/>
+        <rect x="47" y="29" width="6" height="3" fill="#6bff6b" opacity="0.6"/>
 
         <!-- Left arm (static, resting on anvil) -->
-        <rect x="30" y="52" width="6" height="14" fill="#22c55e"/>
+        <rect x="30" y="52" width="6" height="14" fill="#4ade80"/>
 
         <!-- Right arm with hammer (animated) -->
         <g class="knight-arm-hammer">
-          <rect x="44" y="48" width="6" height="14" fill="#22c55e"/>
+          <rect x="44" y="48" width="6" height="14" fill="#4ade80"/>
           <!-- Hammer handle -->
           <rect x="48" y="40" width="3" height="16" fill="#15803d"/>
           <!-- Hammer head -->
-          <rect x="45" y="36" width="9" height="6" fill="#4ade80"/>
+          <rect x="45" y="36" width="9" height="6" fill="#b8e6b8"/>
           <rect x="45" y="36" width="9" height="2" fill="#6bff6b"/>
         </g>
 
         <!-- Sparks (appear on each strike) -->
         <g class="knight-spark">
-          <rect x="42" y="56" width="2" height="2" fill="#6bff6b"/>
+          <rect x="42" y="56" width="2" height="2" fill="#ffffff"/>
           <rect x="46" y="54" width="2" height="2" fill="#6bff6b"/>
-          <rect x="50" y="57" width="2" height="2" fill="#6bff6b"/>
+          <rect x="50" y="57" width="2" height="2" fill="#ffffff"/>
           <rect x="54" y="55" width="2" height="2" fill="#6bff6b"/>
-          <rect x="38" y="55" width="2" height="2" fill="#4ade80"/>
-          <rect x="58" y="56" width="2" height="2" fill="#4ade80"/>
+          <rect x="38" y="55" width="2" height="2" fill="#b8e6b8"/>
+          <rect x="58" y="56" width="2" height="2" fill="#b8e6b8"/>
         </g>
 
         <!-- Sword on anvil (appears after forging) -->
         <g class="knight-sword">
           <!-- Blade -->
-          <rect x="49" y="44" width="2" height="18" fill="#4ade80"/>
-          <rect x="49" y="44" width="1" height="18" fill="#6bff6b"/>
+          <rect x="49" y="42" width="2" height="20" fill="#b8e6b8"/>
+          <rect x="49" y="42" width="1" height="20" fill="#ffffff"/>
           <!-- Crossguard -->
-          <rect x="45" y="62" width="10" height="3" fill="#15803d"/>
+          <rect x="45" y="62" width="10" height="3" fill="#4ade80"/>
           <!-- Handle -->
           <rect x="49" y="65" width="2" height="6" fill="#15803d"/>
           <!-- Pommel -->
-          <rect x="48" y="71" width="4" height="2" fill="#22c55e"/>
+          <rect x="48" y="71" width="4" height="2" fill="#4ade80"/>
         </g>
 
         <!-- Right arm lifting sword (animated, replaces hammer arm) -->
         <g class="knight-arm-lift">
-          <rect x="44" y="48" width="6" height="14" fill="#22c55e"/>
+          <rect x="44" y="48" width="6" height="14" fill="#4ade80"/>
           <!-- Sword in hand, raised above head -->
-          <rect x="46" y="14" width="2" height="36" fill="#4ade80"/>
-          <rect x="46" y="14" width="1" height="36" fill="#6bff6b"/>
+          <rect x="46" y="10" width="2" height="40" fill="#b8e6b8"/>
+          <rect x="46" y="10" width="1" height="40" fill="#ffffff"/>
           <!-- Crossguard -->
-          <rect x="42" y="48" width="10" height="3" fill="#15803d"/>
+          <rect x="42" y="48" width="10" height="3" fill="#4ade80"/>
           <!-- Glow -->
-          <rect x="44" y="12" width="6" height="4" fill="#6bff6b" opacity="0.4"/>
-          <rect x="45" y="10" width="4" height="2" fill="#6bff6b" opacity="0.2"/>
+          <rect x="43" y="6" width="8" height="6" fill="#6bff6b" opacity="0.5"/>
+          <rect x="44" y="4" width="6" height="3" fill="#6bff6b" opacity="0.3"/>
         </g>
       </svg>
     </div>
