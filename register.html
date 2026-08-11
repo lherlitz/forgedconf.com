@@ -677,7 +677,7 @@
     </div>
 
     <div class="info-box">
-      <strong>>> NOTE:</strong> Youth 12-15 attend free! Select the Youth path on the next screen.
+      <strong>>> NOTE:</strong> Everyone gets a free notebook & pen at the door. Level up to get the full Forged Kit.
     </div>
 
     <div class="btn-row">
@@ -732,24 +732,6 @@
           <li>Engraved Wooden Coaster</li>
           <li>Leather Bookmark</li>
           <li>Branded Water Bottle</li>
-        </ul>
-      </div>
-
-      <!-- Youth -->
-      <div class="path-card" data-path="youth" onclick="selectPath('youth')">
-        <div class="path-header">
-          <div class="path-icon">🧒</div>
-          <div class="path-info">
-            <div class="path-name">YOUTH (12-15)</div>
-            <div class="path-price free">FREE</div>
-          </div>
-        </div>
-        <div class="path-desc">Free admission for young men 12-15. Visit Ethan's table to pick up your kit.</div>
-        <ul class="path-features">
-          <li>Full Conference Access</li>
-          <li>Breakfast & Lunch</li>
-          <li>Free Admission</li>
-          <li>Forged Kit available at discussion table</li>
         </ul>
       </div>
     </div>
@@ -892,7 +874,7 @@
     free:    { name: 'Free Registration', price: 0 },
     kit:     { name: 'Level Up - Forged Kit', price: 35 },
     sponsor: { name: 'Sponsor a Knight', price: 70 }, // removed but kept for safety
-    youth:   { name: 'Youth (12-15)', price: 0 }
+    youth:   { name: 'Youth (12-15)', price: 0 } // removed but kept for safety
   };
 
   // === SCREEN NAVIGATION ===
@@ -964,7 +946,7 @@
     if (state.path === 'kit') {
       goToScreen('levelup');
     } else {
-      // Free or Youth - skip level up, go to confirm
+      // Free - skip level up, go to confirm
       goToScreen('confirm');
     }
   }
