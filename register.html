@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGED 2026: THE QUEST — Register | Life Chapel Toledo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a120a;
+    --bg-2: #0f1c0f;
+    --bg-3: #162616;
+    --bg-card: #122012;
+    --green-bright: #6bff6b;
+    --green: #4ade80;
+    --green-mid: #22c55e;
+    --green-dim: #15803d;
+    --green-dark: #0a3d1a;
+    --fg: #b8e6b8;
+    --fg-muted: #5a8a5a;
+    --fg-dim: #3a5a3a;
+    --border: rgba(74,222,128,0.15);
+    --border-bright: rgba(74,222,128,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(0deg, transparent 0px, rgba(0,0,0,0.15) 1px, transparent 2px, transparent 3px);
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.4) 100%);
+  }
+
+  .pixel { font-family: 'Press Start 2P', monospace; }
+  .mono { font-family: 'VT323', monospace; }
+
+  h1, h2, h3 { font-family: 'Cinzel', serif; font-weight: 700; }
+
+  .container { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* === NAV === */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(10,18,10,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--border);
+    padding: 0.75rem 0;
+  }
+  nav .container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; }
+  nav .logo { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--green); text-shadow: 0 0 10px rgba(74,222,128,0.4); }
+  nav .nav-links { display: flex; gap: 1.2rem; align-items: center; }
+  nav .nav-links a { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); }
+  nav .nav-links a:hover { color: var(--green); }
+
+  /* === PROGRESS BAR === */
+  .progress-section {
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 49px;
+    z-index: 999;
+  }
+  .progress-bar-wrap { max-width: 700px; margin: 0 auto; padding: 0 1.5rem; }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .progress-label .step-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+  }
+  .progress-label .step-count {
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: var(--fg-muted);
+  }
+  .progress-track {
+    height: 12px;
+    background: var(--bg-3);
+    border: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    width: 0%;
+    transition: width 0.5s ease;
+    box-shadow: 0 0 10px rgba(74,222,128,0.3);
+  }
+  .progress-pips {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  .pip {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.45rem;
+    color: var(--fg-dim);
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .pip.active { color: var(--green); }
+  .pip.done { color: var(--green-dim); }
+
+  /* === SCREENS === */
+  .screen {
+    display: none;
+    min-height: calc(100vh - 130px);
+    padding: 2.5rem 0 4rem;
+    animation: screenIn 0.4s ease;
+  }
+  .screen.active { display: block; }
+  @keyframes screenIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .screen-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--green-dim);
+    text-align: center;
+    margin-bottom: 0.8rem;
+  }
+  .screen-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    text-align: center;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+  }
+  .screen-title .accent { color: var(--green); }
+  .screen-sub {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: var(--fg-muted);
+    margin-bottom: 2.5rem;
+  }
+
+  /* === START SCREEN === */
+  .start-screen .container { text-align: center; }
+  .start-emblem {
+    width: 120px; height: 120px;
+    margin: 0 auto 2rem;
+    opacity: 0.8;
+  }
+  .start-tagline {
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    color: var(--fg-muted);
+    margin-bottom: 1.5rem;
+  }
+  .start-tagline span { color: var(--green); }
+  .start-meta {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .start-meta-item .label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-bottom: 0.3rem;
+  }
+  .start-meta-item .value {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: var(--green);
+  }
+
+  /* Big start button */
+  .big-btn {
+    display: inline-block;
+    padding: 1.2rem 3rem;
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 6px 0 var(--green-dim);
+    text-decoration: none;
+  }
+  .big-btn:hover { background: var(--green-bright); box-shadow: 0 6px 0 var(--green-mid); transform: translateY(-2px); }
+  .big-btn:active { box-shadow: 0 2px 0 var(--green-dim); transform: translateY(4px); }
+  .big-btn.secondary {
+    background: transparent;
+    color: var(--green);
+    border: 2px solid var(--green-dim);
+    box-shadow: none;
+  }
+  .big-btn.secondary:hover { border-color: var(--green); background: var(--bg-3); box-shadow: none; }
+
+  .blink { animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* === FORM STYLES === */
+  .form-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .form-card:hover { border-color: var(--border-bright); }
+
+  .form-group { margin-bottom: 1.2rem; }
+  .form-group:last-child { margin-bottom: 0; }
+  .form-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .form-input, .form-select {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    color: var(--fg);
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    transition: border-color 0.2s;
+  }
+  .form-input:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  .form-input::placeholder { color: var(--fg-dim); }
+  .form-row { display: flex; gap: 1rem; }
+  .form-row .form-group { flex: 1; }
+
+  .form-helper {
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: var(--fg-dim);
+    margin-top: 0.3rem;
+  }
+
+  /* === PATH SELECTION === */
+  .path-grid {
+    display: grid;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .path-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 2rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .path-card:hover { border-color: var(--green-dim); transform: translateY(-2px); }
+  .path-card.selected { border-color: var(--green); box-shadow: 0 0 25px rgba(74,222,128,0.1); }
+  .path-card.selected::after {
+    content: '✓ SELECTED';
+    position: absolute;
+    top: 0.8rem; right: 0.8rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.45rem;
+    color: var(--green);
+  }
+
+  .path-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .path-icon {
+    width: 50px; height: 50px;
+    border: 2px solid var(--green-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: var(--bg-3);
+    flex-shrink: 0;
+  }
+  .path-info { flex: 1; }
+  .path-name {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.8rem;
+    color: var(--fg);
+    margin-bottom: 0.3rem;
+  }
+  .path-price {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    color: var(--green);
+  }
+  .path-price.free { color: var(--green-mid); }
+  .path-desc {
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: var(--fg-muted);
+    line-height: 1.4;
+    margin-bottom: 0.8rem;
+  }
+  .path-features {
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--fg);
+  }
+  .path-features li {
+    padding: 0.3rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .path-features li::before { content: '>'; color: var(--green); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; margin-top: 0.2rem; }
+
+  .path-badge {
+    display: inline-block;
+    background: var(--green-dim);
+    color: var(--fg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.45rem;
+    padding: 0.2rem 0.5rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  /* === KIT PREVIEW === */
+  .kit-preview {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 2rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .kit-preview h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    color: var(--green);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+  .kit-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+  }
+  .kit-item {
+    text-align: center;
+    padding: 1rem 0.5rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .kit-item .icon { font-size: 2rem; margin-bottom: 0.4rem; filter: grayscale(0.3) brightness(0.9) sepia(0.5) hue-rotate(50deg) saturate(0.8); }
+  .kit-item .name { font-family: 'VT323', monospace; font-size: 1rem; color: var(--fg); }
+  .kit-item .note { font-size: 0.7rem; color: var(--fg-dim); }
+
+  /* === ADD-ONS === */
+  .addon-section {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .addon-section h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: var(--green);
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+  }
+  .addon-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .addon-item:last-child { border-bottom: none; }
+  .addon-check {
+    width: 20px; height: 20px;
+    border: 2px solid var(--green-dim);
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.15s;
+  }
+  .addon-check.checked { background: var(--green); border-color: var(--green); }
+  .addon-check.checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    color: var(--bg);
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+  .addon-info { flex: 1; }
+  .addon-name { font-size: 0.9rem; color: var(--fg); }
+  .addon-desc { font-family: 'VT323', monospace; font-size: 0.95rem; color: var(--fg-muted); }
+  .addon-price { font-family: 'VT323', monospace; font-size: 1.2rem; color: var(--green); }
+
+  /* === SUMMARY === */
+  .summary-card {
+    background: var(--bg-card);
+    border: 2px solid var(--green-dim);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-label { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-muted); }
+  .summary-value { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg); }
+  .summary-total {
+    border-top: 2px solid var(--green-dim);
+    padding-top: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  .summary-total .summary-label { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--green); }
+  .summary-total .summary-value { font-family: 'Press Start 2P', monospace; font-size: 1.1rem; color: var(--green); }
+
+  /* === BUTTONS === */
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  .step-btn {
+    padding: 1rem 2rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .step-btn.primary {
+    background: var(--green);
+    color: var(--bg);
+    box-shadow: 0 5px 0 var(--green-dim);
+  }
+  .step-btn.primary:hover { background: var(--green-bright); box-shadow: 0 5px 0 var(--green-mid); transform: translateY(-1px); }
+  .step-btn.primary:active { box-shadow: 0 2px 0 var(--green-dim); transform: translateY(3px); }
+  .step-btn.primary:disabled { background: var(--bg-3); color: var(--fg-dim); box-shadow: none; cursor: not-allowed; transform: none; }
+  .step-btn.secondary {
+    background: transparent;
+    color: var(--fg-muted);
+    border: 2px solid var(--border);
+  }
+  .step-btn.secondary:hover { color: var(--green); border-color: var(--green-dim); }
+
+  /* === CONFIRMATION === */
+  .confirm-screen { text-align: center; }
+  .confirm-emblem {
+    width: 100px; height: 100px;
+    margin: 0 auto 1.5rem;
+  }
+  .confirm-stamp {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    color: var(--green);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 30px rgba(74,222,128,0.3);
+    animation: stampIn 0.6s ease;
+  }
+  @keyframes stampIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  .confirm-info {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 1.5rem;
+    margin: 2rem auto;
+    max-width: 450px;
+    text-align: left;
+  }
+  .confirm-info .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .confirm-info .row:last-child { border-bottom: none; }
+  .confirm-info .label { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-muted); }
+  .confirm-info .value { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--green); }
+
+  .confirm-next-steps {
+    max-width: 500px;
+    margin: 2rem auto;
+    text-align: left;
+  }
+  .confirm-next-steps h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: var(--green);
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .confirm-next-steps li {
+    list-style: none;
+    padding: 0.5rem 0;
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: var(--fg-muted);
+    display: flex;
+    gap: 0.5rem;
+  }
+  .confirm-next-steps li::before { content: '>'; color: var(--green); font-family: 'Press Start 2P', monospace; font-size: 0.6rem; margin-top: 0.2rem; }
+
+  /* === TYPO EFFECT === */
+  .typewriter {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: var(--green);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    min-height: 1.5rem;
+  }
+
+  /* === MISC === */
+  .info-box {
+    background: var(--bg-3);
+    border-left: 3px solid var(--green-dim);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: var(--fg-muted);
+  }
+  .info-box strong { color: var(--green); }
+
+  .youth-note {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 1.1rem;
+    color: var(--fg-dim);
+    margin-top: 1.5rem;
+  }
+  .youth-note a { color: var(--green); cursor: pointer; text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    .container { padding: 0 1rem; }
+    .form-row { flex-direction: column; gap: 0; }
+    .path-header { flex-direction: column; text-align: center; }
+    .btn-row { flex-direction: column; }
+    .step-btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="logo" onclick="goToScreen('start'); return false;">FORGED '26</a>
+    <div class="nav-links">
+      <a href="#" onclick="goToScreen('start'); return false;">Home</a>
+      <a href="#" onclick="goToScreen('path'); return false;">Register</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PROGRESS BAR (hidden on start screen) -->
+<div class="progress-section" id="progressSection" style="display:none;">
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span class="step-name" id="stepName">CHARACTER CREATION</span>
+      <span class="step-count" id="stepCount">STEP 1 / 4</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-pips">
+      <span class="pip" id="pip1">CHARACTER</span>
+      <span class="pip" id="pip2">CHOOSE PATH</span>
+      <span class="pip" id="pip3">CONFIRM</span>
+      <span class="pip" id="pip4">COMPLETE</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- SCREEN 1: PRESS START        -->
+<!-- ============================ -->
+<div class="screen start-screen active" id="screen-start">
+  <div class="container">
+    <svg class="start-emblem" viewBox="0 0 120 120" fill="none">
+      <rect x="40" y="20" width="40" height="60" fill="none" stroke="#4ade80" stroke-width="2"/>
+      <rect x="35" y="15" width="50" height="5" fill="#4ade80"/>
+      <rect x="45" y="80" width="30" height="20" fill="none" stroke="#4ade80" stroke-width="2"/>
+      <rect x="50" y="30" width="20" height="10" fill="#4ade80" opacity="0.3"/>
+      <rect x="50" y="45" width="20" height="3" fill="#4ade80" opacity="0.2"/>
+      <rect x="50" y="52" width="20" height="3" fill="#4ade80" opacity="0.2"/>
+      <rect x="50" y="59" width="15" height="3" fill="#4ade80" opacity="0.2"/>
+    </svg>
+    <div class="screen-label">- - THE QUEST BEGINS - -</div>
+    <h1 class="screen-title">FORGED<br><span class="accent">THE QUEST</span></h1>
+    <div class="start-tagline">Answer the Call. <span>Face the Darkness.</span> Live the Story.</div>
+    <div class="start-meta">
+      <div class="start-meta-item"><div class="label">DATE</div><div class="value">NOV 7, 2026</div></div>
+      <div class="start-meta-item"><div class="label">TIME</div><div class="value">9AM - 2PM</div></div>
+      <div class="start-meta-item"><div class="label">LOCATION</div><div class="value">LIFE CHAPEL</div></div>
+    </div>
+    <button class="big-btn blink" onclick="goToScreen('character')">PRESS START</button>
+    <div class="screen-sub" style="margin-top: 1.5rem; font-size: 1rem;">> Registration takes 60 seconds</div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- SCREEN 2: CHARACTER CREATION  -->
+<!-- ============================ -->
+<div class="screen" id="screen-character">
+  <div class="container">
+    <div class="screen-label">- - CHARACTER CREATION - -</div>
+    <h2 class="screen-title">Enter Your <span class="accent">Name</span></h2>
+    <p class="screen-sub">Every knight begins with a name.</p>
+
+    <div class="form-card">
+      <div class="form-group">
+        <label class="form-label">FIRST NAME</label>
+        <input type="text" class="form-input" id="firstName" placeholder="Enter your name..." autocomplete="given-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">LAST NAME</label>
+        <input type="text" class="form-input" id="lastName" placeholder="Enter your surname..." autocomplete="family-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">EMAIL</label>
+        <input type="email" class="form-input" id="email" placeholder="knight@quest.com" autocomplete="email">
+        <div class="form-helper">> Confirmation will be sent here</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">PHONE (optional)</label>
+        <input type="tel" class="form-input" id="phone" placeholder="555-1234" autocomplete="tel">
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>>> NOTE:</strong> Youth 12-15 attend free! Select the Youth path on the next screen.
+    </div>
+
+    <div class="btn-row">
+      <button class="step-btn secondary" onclick="goToScreen('start')">BACK</button>
+      <button class="step-btn primary" id="charNext" onclick="validateCharacter()">CONTINUE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- SCREEN 3: CHOOSE YOUR PATH    -->
+<!-- ============================ -->
+<div class="screen" id="screen-path">
+  <div class="container">
+    <div class="screen-label">- - CHOOSE YOUR PATH - -</div>
+    <h2 class="screen-title">Select Your <span class="accent">Quest</span></h2>
+    <p class="screen-sub">Every man may attend free. Will you level up?</p>
+
+    <div class="path-grid">
+      <!-- Free -->
+      <div class="path-card" data-path="free" onclick="selectPath('free')">
+        <div class="path-header">
+          <div class="path-icon">🗡️</div>
+          <div class="path-info">
+            <div class="path-name">FREE REGISTRATION</div>
+            <div class="path-price free">FREE</div>
+          </div>
+        </div>
+        <div class="path-desc">Attend the full conference. No kit, no cost.</div>
+        <ul class="path-features">
+          <li>Full Conference Access (9AM - 2PM)</li>
+          <li>Breakfast & Lunch</li>
+          <li>Free notebook & pen at the door</li>
+        </ul>
+      </div>
+
+      <!-- Level Up (Kit) -->
+      <div class="path-card" data-path="kit" onclick="selectPath('kit')">
+        <div class="path-badge">RECOMMENDED</div>
+        <div class="path-header">
+          <div class="path-icon">⚔️</div>
+          <div class="path-info">
+            <div class="path-name">LEVEL UP - FORGED KIT</div>
+            <div class="path-price">$35</div>
+          </div>
+        </div>
+        <div class="path-desc">Register + receive the full Forged Kit on arrival.</div>
+        <ul class="path-features">
+          <li>Everything in Free Registration</li>
+          <li>Forged Canvas Bag</li>
+          <li>Forged T-Shirt (one cool design)</li>
+          <li>Engraved Wooden Coaster</li>
+          <li>Leather Bookmark</li>
+          <li>Branded Water Bottle</li>
+        </ul>
+      </div>
+
+      <!-- Sponsor -->
+      <div class="path-card" data-path="sponsor" onclick="selectPath('sponsor')">
+        <div class="path-header">
+          <div class="path-icon">🛡️</div>
+          <div class="path-info">
+            <div class="path-name">SPONSOR A KNIGHT</div>
+            <div class="path-price">$70</div>
+          </div>
+        </div>
+        <div class="path-desc">Register with kit + sponsor a young man (12-15) to attend free.</div>
+        <ul class="path-features">
+          <li>Everything in Level Up</li>
+          <li>Funds a full Forged Kit for a young man</li>
+          <li>Supports Guest Speakers</li>
+          <li>Acknowledgement at event</li>
+        </ul>
+      </div>
+
+      <!-- Youth -->
+      <div class="path-card" data-path="youth" onclick="selectPath('youth')">
+        <div class="path-header">
+          <div class="path-icon">🧒</div>
+          <div class="path-info">
+            <div class="path-name">YOUTH (12-15)</div>
+            <div class="path-price free">FREE</div>
+          </div>
+        </div>
+        <div class="path-desc">Free admission for young men 12-15. Visit Ethan's table to pick up your kit.</div>
+        <ul class="path-features">
+          <li>Full Conference Access</li>
+          <li>Breakfast & Lunch</li>
+          <li>Free Admission</li>
+          <li>Forged Kit available at discussion table</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="step-btn secondary" onclick="goToScreen('character')">BACK</button>
+      <button class="step-btn primary" id="pathNext" onclick="proceedFromPath()" disabled>CONTINUE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- SCREEN 3B: LEVEL UP (kit detail) -->
+<!-- ============================ -->
+<div class="screen" id="screen-levelup">
+  <div class="container">
+    <div class="screen-label">- - LEVEL UP - -</div>
+    <h2 class="screen-title">Your <span class="accent">Forged Kit</span></h2>
+    <p class="screen-sub">Here's what you'll receive on November 7.</p>
+
+    <div class="kit-preview">
+      <h3>FORGED KIT CONTENTS</h3>
+      <div class="kit-items">
+        <div class="kit-item"><div class="icon">🎒</div><div class="name">Canvas Bag</div><div class="note">Black, branded</div></div>
+        <div class="kit-item"><div class="icon">👕</div><div class="name">Forged T-Shirt</div><div class="note">One cool design</div></div>
+        <div class="kit-item"><div class="icon">🪵</div><div class="name">Wooden Coaster</div><div class="note">Engraved</div></div>
+        <div class="kit-item"><div class="icon">🔖</div><div class="name">Leather Bookmark</div><div class="note">Hand-stamped</div></div>
+        <div class="kit-item"><div class="icon">💧</div><div class="name">Water Bottle</div><div class="note">Branded</div></div>
+      </div>
+    </div>
+
+    <!-- Add-ons / Merch -->
+    <div class="addon-section">
+      <h3>EXTRA MERCH (OPTIONAL)</h3>
+      <div class="addon-item" onclick="toggleAddon(this, 'longsleeve', 25)">
+        <div class="addon-check"></div>
+        <div class="addon-info"><div class="addon-name">Long Sleeve T-Shirt</div><div class="addon-desc">Forged logo, sleeve print</div></div>
+        <div class="addon-price">$25</div>
+      </div>
+      <div class="addon-item" onclick="toggleAddon(this, 'generaltshirt', 18)">
+        <div class="addon-check"></div>
+        <div class="addon-info"><div class="addon-name">General Forged Tee</div><div class="addon-desc">No year - timeless design</div></div>
+        <div class="addon-price">$18</div>
+      </div>
+      <div class="addon-item" onclick="toggleAddon(this, 'workbook', 12)">
+        <div class="addon-check"></div>
+        <div class="addon-info"><div class="addon-name">Bible Study PDF</div><div class="addon-desc">Digital download, conference companion</div></div>
+        <div class="addon-price">$12</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>>> PRE-ORDER DEADLINE:</strong> October 17. After that, kits available at the door while supplies last ($40).
+    </div>
+
+    <div class="btn-row">
+      <button class="step-btn secondary" onclick="goToScreen('path')">BACK</button>
+      <button class="step-btn primary" onclick="goToScreen('confirm')">CONTINUE</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- SCREEN 4: CONFIRM / CHECKOUT  -->
+<!-- ============================ -->
+<div class="screen" id="screen-confirm">
+  <div class="container">
+    <div class="screen-label">- - QUEST CONFIRMATION - -</div>
+    <h2 class="screen-title">Review Your <span class="accent">Quest</span></h2>
+    <p class="screen-sub">Before you accept...</p>
+
+    <div class="summary-card">
+      <div class="summary-row"><span class="summary-label">Knight:</span><span class="summary-value" id="sumName">—</span></div>
+      <div class="summary-row"><span class="summary-label">Email:</span><span class="summary-value" id="sumEmail">—</span></div>
+      <div class="summary-row"><span class="summary-label">Path:</span><span class="summary-value" id="sumPath">—</span></div>
+      <div class="summary-row"><span class="summary-label">Registration:</span><span class="summary-value" id="sumReg">—</span></div>
+      <div id="sumAddons"></div>
+      <div class="summary-row summary-total"><span class="summary-label">TOTAL:</span><span class="summary-value" id="sumTotal">$0</span></div>
+    </div>
+
+    <div class="info-box" id="paymentNote">
+      <strong>>> PAYMENT:</strong> You'll be redirected to a secure checkout to complete your registration.
+      <br><span style="color: var(--fg-dim); font-size: 0.95rem;">(Mock — no real payment will be processed)</span>
+    </div>
+
+    <div class="btn-row">
+      <button class="step-btn secondary" onclick="goToScreen('levelup')">BACK</button>
+      <button class="step-btn primary" onclick="acceptQuest()">ACCEPT QUEST</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ -->
+<!-- SCREEN 5: QUEST ACCEPTED      -->
+<!-- ============================ -->
+<div class="screen confirm-screen" id="screen-complete">
+  <div class="container">
+    <svg class="confirm-emblem" viewBox="0 0 100 100" fill="none">
+      <rect x="30" y="15" width="40" height="50" fill="none" stroke="#4ade80" stroke-width="2"/>
+      <rect x="25" y="10" width="50" height="5" fill="#4ade80"/>
+      <rect x="35" y="65" width="30" height="20" fill="none" stroke="#4ade80" stroke-width="2"/>
+      <path d="M40 35 L48 43 L62 28" stroke="#4ade80" stroke-width="3" fill="none"/>
+    </svg>
+    <div class="confirm-stamp">QUEST ACCEPTED</div>
+    <p class="screen-sub" style="margin-top: 0.5rem;">Your journey begins November 7.</p>
+
+    <div class="typewriter" id="typewriterText"></div>
+
+    <div class="confirm-info">
+      <div class="row"><span class="label">Knight:</span><span class="value" id="confName">—</span></div>
+      <div class="row"><span class="label">Path:</span><span class="value" id="confPath">—</span></div>
+      <div class="row"><span class="label">Date:</span><span class="value">Nov 7, 2026</span></div>
+      <div class="row"><span class="label">Time:</span><span class="value">9AM - 2PM</span></div>
+      <div class="row"><span class="label">Location:</span><span class="value">Life Chapel Toledo</span></div>
+      <div class="row"><span class="label">Confirmation:</span><span class="value" id="confId">—</span></div>
+    </div>
+
+    <div class="confirm-next-steps">
+      <h3>- - NEXT STEPS - -</h3>
+      <li>Check your email for confirmation</li>
+      <li>Add November 7 to your calendar</li>
+      <li>Bring a friend or your son (12-15 attend free)</li>
+      <li>Follow LC Men's on social for updates</li>
+    </div>
+
+    <div class="btn-row">
+      <button class="step-btn primary" onclick="resetQuest()">NEW REGISTRATION</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // === STATE ===
+  let state = {
+    firstName: '', lastName: '', email: '', phone: '',
+    path: '', addons: {}, total: 0
+  };
+
+  const pathInfo = {
+    free:    { name: 'Free Registration', price: 0 },
+    kit:     { name: 'Level Up - Forged Kit', price: 35 },
+    sponsor: { name: 'Sponsor a Knight', price: 70 },
+    youth:   { name: 'Youth (12-15)', price: 0 }
+  };
+
+  // === SCREEN NAVIGATION ===
+  const screens = ['start', 'character', 'path', 'levelup', 'confirm', 'complete'];
+  const steps = {
+    character: { num: 1, label: 'CHARACTER CREATION', fill: 25 },
+    path:      { num: 2, label: 'CHOOSE YOUR PATH', fill: 50 },
+    levelup:   { num: 2, label: 'CHOOSE YOUR PATH', fill: 60 },
+    confirm:   { num: 3, label: 'CONFIRMATION', fill: 75 },
+    complete:  { num: 4, label: 'COMPLETE', fill: 100 }
+  };
+
+  function goToScreen(name) {
+    screens.forEach(s => document.getElementById('screen-' + s).classList.remove('active'));
+    document.getElementById('screen-' + name).classList.add('active');
+    window.scrollTo(0, 0);
+
+    const showProgress = name !== 'start' && name !== 'complete';
+    document.getElementById('progressSection').style.display = showProgress ? 'block' : 'none';
+
+    if (steps[name]) {
+      const s = steps[name];
+      document.getElementById('stepName').textContent = s.label;
+      document.getElementById('stepCount').textContent = `STEP ${s.num} / 4`;
+      document.getElementById('progressFill').style.width = s.fill + '%';
+
+      ['pip1','pip2','pip3','pip4'].forEach((p, i) => {
+        const el = document.getElementById(p);
+        el.classList.remove('active', 'done');
+        if (i + 1 === s.num) el.classList.add('active');
+        else if (i + 1 < s.num) el.classList.add('done');
+      });
+    }
+
+    if (name === 'confirm') updateSummary();
+    if (name === 'complete') playTypewriter();
+  }
+
+  // === CHARACTER CREATION ===
+  function validateCharacter() {
+    const fn = document.getElementById('firstName').value.trim();
+    const ln = document.getElementById('lastName').value.trim();
+    const em = document.getElementById('email').value.trim();
+
+    if (!fn || !ln) { alert('> You must enter your name, knight.'); return; }
+    if (!em || !em.includes('@')) { alert('> A valid email is required.'); return; }
+
+    state.firstName = fn;
+    state.lastName = ln;
+    state.email = em;
+    state.phone = document.getElementById('phone').value.trim();
+
+    goToScreen('path');
+  }
+
+  // === PATH SELECTION ===
+  function selectPath(p) {
+    state.path = p;
+    state.addons = {};
+    document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
+    document.querySelector(`[data-path="${p}"]`).classList.add('selected');
+    document.getElementById('pathNext').disabled = false;
+
+    // Reset addon checkboxes
+    document.querySelectorAll('.addon-check').forEach(c => c.classList.remove('checked'));
+  }
+
+  function proceedFromPath() {
+    if (state.path === 'kit' || state.path === 'sponsor') {
+      goToScreen('levelup');
+    } else {
+      // Free or Youth - skip level up, go to confirm
+      goToScreen('confirm');
+    }
+  }
+
+  // === ADD-ONS ===
+  function toggleAddon(el, key, price) {
+    el.querySelector('.addon-check').classList.toggle('checked');
+    if (state.addons[key]) {
+      delete state.addons[key];
+    } else {
+      state.addons[key] = price;
+    }
+  }
+
+  // === SUMMARY ===
+  function updateSummary() {
+    const fullName = `${state.firstName} ${state.lastName}`;
+    document.getElementById('sumName').textContent = fullName;
+    document.getElementById('sumEmail').textContent = state.email;
+    document.getElementById('sumPath').textContent = pathInfo[state.path].name;
+
+    let total = pathInfo[state.path].price;
+    document.getElementById('sumReg').textContent = pathInfo[state.path].price === 0 ? 'FREE' : `$${pathInfo[state.path].price}`;
+
+    let addonHTML = '';
+    for (const [key, price] of Object.entries(state.addons)) {
+      const names = { longsleeve: 'Long Sleeve Tee', generaltshirt: 'General Forged Tee', workbook: 'Bible Study PDF' };
+      addonHTML += `<div class="summary-row"><span class="summary-label">${names[key]}</span><span class="summary-value">$${price}</span></div>`;
+      total += price;
+    }
+    document.getElementById('sumAddons').innerHTML = addonHTML;
+
+    state.total = total;
+    document.getElementById('sumTotal').textContent = total === 0 ? 'FREE' : `$${total}`;
+
+    // Hide payment note if free
+    document.getElementById('paymentNote').style.display = total === 0 ? 'none' : 'block';
+  }
+
+  // === ACCEPT QUEST ===
+  function acceptQuest() {
+    const confId = 'FRGD-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    document.getElementById('confName').textContent = `${state.firstName} ${state.lastName}`;
+    document.getElementById('confPath').textContent = pathInfo[state.path].name;
+    document.getElementById('confId').textContent = confId;
+    goToScreen('complete');
+  }
+
+  // === TYPEWRITER ===
+  function playTypewriter() {
+    const msg = `> Welcome, ${state.firstName}. Your quest awaits...`;
+    const el = document.getElementById('typewriterText');
+    el.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < msg.length) {
+        el.textContent += msg[i];
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
+  }
+
+  // === RESET ===
+  function resetQuest() {
+    state = { firstName: '', lastName: '', email: '', phone: '', path: '', addons: {}, total: 0 };
+    document.querySelectorAll('input').forEach(i => i.value = '');
+    document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
+    document.querySelectorAll('.addon-check').forEach(c => c.classList.remove('checked'));
+    document.getElementById('pathNext').disabled = true;
+    goToScreen('start');
+  }
+
+  // Enter key support on character screen
+  document.getElementById('screen-character').addEventListener('keypress', e => {
+    if (e.key === 'Enter') validateCharacter();
+  });
+</script>
+</body>
+</html>

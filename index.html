@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FORGED 2026: THE QUEST — Men's Conference | Life Chapel Toledo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Monochromatic green palette — Game Boy / phosphor CRT */
+    --bg: #0a120a;
+    --bg-2: #0f1c0f;
+    --bg-3: #162616;
+    --bg-card: #122012;
+    --green-bright: #6bff6b;
+    --green: #4ade80;
+    --green-mid: #22c55e;
+    --green-dim: #15803d;
+    --green-dark: #0a3d1a;
+    --green-darker: #05210e;
+    --fg: #b8e6b8;
+    --fg-muted: #5a8a5a;
+    --fg-dim: #3a5a3a;
+    --border: rgba(74,222,128,0.15);
+    --border-bright: rgba(74,222,128,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* CRT scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0px,
+      rgba(0,0,0,0.15) 1px,
+      transparent 2px,
+      transparent 3px
+    );
+  }
+
+  /* Phosphor glow */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 9998;
+    background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.4) 100%);
+  }
+
+  .pixel { font-family: 'Press Start 2P', monospace; }
+  .mono { font-family: 'VT323', monospace; }
+
+  h1, h2, h3 { font-family: 'Cinzel', serif; font-weight: 700; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(10,18,10,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--border);
+    padding: 0.75rem 0;
+  }
+  nav .container { display: flex; align-items: center; justify-content: space-between; }
+  nav .logo { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.05em; text-shadow: 0 0 10px rgba(74,222,128,0.4); }
+  nav ul { display: flex; gap: 1.5rem; list-style: none; }
+  nav ul a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); transition: color 0.15s; }
+  nav ul a:hover { color: var(--green); }
+  nav .nav-cta {
+    padding: 0.5rem 1.2rem;
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--green-dim);
+  }
+  nav .nav-cta:hover { background: var(--green-bright); box-shadow: 0 4px 0 var(--green-mid); }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(34,197,94,0.08) 0%, transparent 50%),
+      linear-gradient(180deg, #0a120a 0%, #0f1c0f 50%, #0a120a 100%);
+    overflow: hidden;
+  }
+
+  /* Pixel art castle silhouette */
+  .hero-bg {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 220px;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg width='1200' height='220' xmlns='http://www.w3.org/2000/svg' shape-rendering='crispEdges'%3E%3Cg fill='%2315803d'%3E%3Crect x='100' y='110' width='40' height='110'/%3E%3Crect x='140' y='90' width='20' height='20'/%3E%3Crect x='180' y='90' width='20' height='20'/%3E%3Crect x='220' y='90' width='20' height='20'/%3E%3Crect x='260' y='90' width='20' height='20'/%3E%3Crect x='260' y='70' width='20' height='20'/%3E%3Crect x='300' y='110' width='40' height='110'/%3E%3Crect x='400' y='70' width='60' height='150'/%3E%3Crect x='460' y='50' width='20' height='20'/%3E%3Crect x='480' y='30' width='20' height='40'/%3E%3Crect x='500' y='50' width='20' height='20'/%3E%3Crect x='520' y='70' width='60' height='150'/%3E%3Crect x='600' y='90' width='20' height='130'/%3E%3Crect x='620' y='70' width='40' height='150'/%3E%3Crect x='660' y='90' width='20' height='130'/%3E%3Crect x='760' y='110' width='40' height='110'/%3E%3Crect x='800' y='90' width='20' height='20'/%3E%3Crect x='840' y='90' width='20' height='20'/%3E%3Crect x='880' y='110' width='40' height='110'/%3E%3C/g%3E%3C/svg%3E");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-size: 80% 220px;
+  }
+
+  /* Floating pixel particles */
+  .hero-particles {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: var(--green);
+    opacity: 0.3;
+    animation: float 8s linear infinite;
+  }
+  .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 7s; }
+  .particle:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 9s; }
+  .particle:nth-child(3) { left: 40%; animation-delay: 1s; animation-duration: 6s; }
+  .particle:nth-child(4) { left: 55%; animation-delay: 3s; animation-duration: 8s; }
+  .particle:nth-child(5) { left: 70%; animation-delay: 0.5s; animation-duration: 10s; }
+  .particle:nth-child(6) { left: 85%; animation-delay: 2.5s; animation-duration: 7.5s; }
+  .particle:nth-child(7) { left: 15%; animation-delay: 4s; animation-duration: 8.5s; }
+  .particle:nth-child(8) { left: 65%; animation-delay: 1.5s; animation-duration: 9.5s; }
+  @keyframes float {
+    0% { bottom: 0; opacity: 0; }
+    10% { opacity: 0.4; }
+    90% { opacity: 0.4; }
+    100% { bottom: 100%; opacity: 0; }
+  }
+
+  .hero-content { position: relative; z-index: 2; padding: 2rem; }
+
+  .hero .pre-title {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    letter-spacing: 0.3em;
+    color: var(--green-mid);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .hero .pre-title::before { content: '> '; color: var(--green); }
+
+  .hero h1 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.8rem, 6vw, 4rem);
+    line-height: 1.2;
+    color: var(--green);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 20px rgba(74,222,128,0.3), 0 0 60px rgba(74,222,128,0.15);
+  }
+  .hero .quest-sub {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1rem, 3vw, 2rem);
+    color: var(--fg);
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 15px rgba(184,230,184,0.2);
+  }
+
+  .hero .tagline {
+    font-family: 'VT323', monospace;
+    font-size: 1.5rem;
+    color: var(--fg-muted);
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+  .hero .tagline span { color: var(--green); }
+
+  /* HUD bars */
+  .hud {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+    margin: 0 auto 2rem;
+    text-align: left;
+  }
+  .hud-bar { display: flex; align-items: center; gap: 0.5rem; }
+  .hud-label { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--fg-muted); min-width: 30px; }
+  .hud-track { flex: 1; height: 16px; background: var(--bg-3); border: 2px solid var(--border); position: relative; }
+  .hud-fill { height: 100%; transition: width 1s; }
+  .hud-fill.hp { background: var(--green); width: 100%; box-shadow: 0 0 8px rgba(74,222,128,0.3); }
+  .hud-fill.mp { background: var(--green-mid); width: 85%; box-shadow: 0 0 8px rgba(34,197,94,0.3); }
+  .hud-fill.xp { background: var(--green-dim); width: 60%; }
+  .hud-val { font-family: 'VT323', monospace; font-size: 1rem; color: var(--green); min-width: 50px; text-align: right; }
+
+  .hero-meta {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .hero-meta-item { text-align: center; }
+  .hero-meta-item .label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: var(--fg-muted);
+    margin-bottom: 0.3rem;
+  }
+  .hero-meta-item .value {
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: var(--green);
+  }
+
+  .hero-cta {
+    margin-top: 2rem;
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 6px 0 var(--green-dim);
+    text-shadow: none;
+  }
+  .hero-cta:hover {
+    background: var(--green-bright);
+    box-shadow: 0 6px 0 var(--green-mid);
+    transform: translateY(-2px);
+  }
+  .hero-cta:active { box-shadow: 0 2px 0 var(--green-dim); transform: translateY(4px); }
+
+  .insert-coin {
+    position: absolute;
+    bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: var(--fg-dim);
+    animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* === SECTION COMMON === */
+  section { padding: 5rem 0; position: relative; }
+  .section-label {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--green-dim);
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    text-align: center;
+    color: var(--fg);
+    margin-bottom: 3rem;
+    line-height: 1.4;
+  }
+  .section-title .accent { color: var(--green); }
+
+  .pixel-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+  }
+  .pixel-divider .dash { color: var(--green-dim); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; letter-spacing: 0.5em; }
+
+  /* === ABOUT === */
+  .about { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%); }
+  .about-text {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+  .about-text p + p { margin-top: 1rem; }
+  .about-text .highlight { color: var(--green); }
+
+  .arc {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+  }
+  .arc-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .arc-step .badge {
+    width: 60px; height: 60px;
+    border: 3px solid var(--green-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: var(--green);
+    background: var(--bg-3);
+    box-shadow: 0 0 15px rgba(34,197,94,0.1);
+  }
+  .arc-step .label {
+    font-family: 'VT323', monospace;
+    font-size: 1rem;
+    color: var(--fg-muted);
+    letter-spacing: 0.1em;
+  }
+  .arc-arrow { align-self: center; color: var(--green-dim); font-family: 'VT323', monospace; font-size: 1.5rem; }
+
+  /* === SESSIONS === */
+  .sessions { background: var(--bg); }
+  .session-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .session-card {
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    padding: 2rem 1.5rem;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .session-card:hover {
+    border-color: var(--green);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(74,222,128,0.1);
+  }
+  .session-card .level-badge {
+    position: absolute;
+    top: -10px; right: 10px;
+    background: var(--green-dim);
+    color: var(--fg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    letter-spacing: 0.05em;
+  }
+  .session-num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: var(--green-dim);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+  .session-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--fg);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .session-question {
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    color: var(--green);
+    margin-bottom: 0.8rem;
+  }
+  .session-question::before { content: '[?] '; color: var(--green-dim); }
+  .session-card p {
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    line-height: 1.6;
+  }
+  .session-movement {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.3rem 0.8rem;
+    background: var(--bg-3);
+    border: 1px solid var(--green-dim);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  /* === AGENDA === */
+  .agenda { background: linear-gradient(180deg, var(--bg-2) 0%, var(--bg) 100%); }
+  .timeline { max-width: 650px; margin: 0 auto; }
+  .timeline-item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 2px dashed var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-time {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.65rem;
+    color: var(--green);
+    min-width: 90px;
+    letter-spacing: 0.02em;
+  }
+  .timeline-content { flex: 1; }
+  .timeline-content .title { font-size: 0.95rem; color: var(--fg); font-weight: 500; }
+  .timeline-content .desc { font-size: 0.8rem; color: var(--fg-muted); margin-top: 0.2rem; }
+  .timeline-content .speaker { font-family: 'VT323', monospace; font-size: 1rem; color: var(--green-mid); margin-top: 0.2rem; }
+
+  /* === SPEAKERS === */
+  .speakers { background: var(--bg); }
+  .speaker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .speaker-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    transition: all 0.2s;
+  }
+  .speaker-card:hover { border-color: var(--green); transform: translateY(-3px); }
+  .speaker-avatar {
+    width: 80px; height: 80px;
+    margin: 0 auto 1rem;
+    border: 3px solid var(--green-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1rem;
+    color: var(--green);
+    background: var(--bg-3);
+    box-shadow: 0 0 15px rgba(34,197,94,0.1);
+  }
+  .speaker-card h3 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--fg); margin-bottom: 0.3rem; }
+  .speaker-card .role { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--green-mid); margin-bottom: 0.5rem; }
+  .speaker-card p { font-size: 0.8rem; color: var(--fg-muted); }
+
+  /* === ACTIVITIES === */
+  .activities { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%); }
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .activity-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    transition: all 0.15s;
+  }
+  .activity-card:hover { border-color: var(--green); transform: scale(1.03); }
+  .activity-icon { font-size: 1.8rem; margin-bottom: 0.5rem; filter: grayscale(0.3) brightness(0.9) sepia(0.5) hue-rotate(50deg) saturate(0.8); }
+  .activity-card h4 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--fg); margin-bottom: 0.3rem; }
+  .activity-card p { font-family: 'VT323', monospace; font-size: 1rem; color: var(--fg-muted); }
+
+  /* === REGISTRATION === */
+  .registration { background: var(--bg-2); }
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 950px;
+    margin: 0 auto;
+  }
+  .price-card {
+    background: var(--bg);
+    border: 3px solid var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    transition: all 0.2s;
+  }
+  .price-card:hover { border-color: var(--green-dim); }
+  .price-card.featured {
+    border-color: var(--green);
+    box-shadow: 0 0 40px rgba(74,222,128,0.08);
+  }
+  .price-card.featured::before {
+    content: '* BEST VALUE *';
+    position: absolute;
+    top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  .price-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--fg);
+    margin-bottom: 0.5rem;
+  }
+  .price-amount {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 2rem;
+    color: var(--green);
+    margin: 1rem 0;
+    text-shadow: 0 0 15px rgba(74,222,128,0.2);
+  }
+  .price-amount .currency { font-size: 1rem; vertical-align: top; }
+  .price-card .desc { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 1.5rem; }
+  .price-features { list-style: none; text-align: left; margin-bottom: 1.5rem; }
+  .price-features li {
+    font-size: 0.8rem;
+    color: var(--fg);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .price-features li::before { content: '>'; color: var(--green); font-size: 0.6rem; margin-top: 0.3rem; font-family: 'Press Start 2P', monospace; }
+  .price-btn {
+    display: block;
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    background: var(--green);
+    color: var(--bg);
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 4px 0 var(--green-dim);
+  }
+  .price-btn:hover { background: var(--green-bright); box-shadow: 0 4px 0 var(--green-mid); }
+  .price-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--green-dim); }
+
+  .reg-note {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: var(--fg-muted);
+  }
+  .reg-note strong { color: var(--green); }
+
+  /* === FOOTER === */
+  footer {
+    background: var(--bg);
+    padding: 3rem 0 1.5rem;
+    text-align: center;
+    border-top: 3px solid var(--border);
+  }
+  .footer-logo {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.9rem;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(74,222,128,0.3);
+  }
+  .footer-tag { font-family: 'VT323', monospace; font-size: 1.2rem; color: var(--fg-muted); margin-bottom: 1rem; }
+  .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin: 1rem 0; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); }
+  .footer-links a:hover { color: var(--green); }
+  footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 0.2rem; }
+  .footer-bottom { font-size: 0.7rem; color: var(--fg-dim); margin-top: 1.5rem; font-family: 'Inter', sans-serif; }
+
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .hero-meta { gap: 1rem; }
+    .timeline-item { flex-direction: column; gap: 0.3rem; }
+    .timeline-time { min-width: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">FORGED '26</div>
+    <ul>
+      <li><a href="#about">Quest</a></li>
+      <li><a href="#sessions">Levels</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#speakers">Party</a></li>
+      <li><a href="#register">Register</a></li>
+    </ul>
+    <button class="nav-cta">START</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles">
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div>
+  </div>
+  <div class="hero-content">
+    <div class="pre-title">Life Chapel Toledo</div>
+    <h1>FORGED</h1>
+    <div class="quest-sub">THE QUEST</div>
+    <div class="tagline">Answer the Call. <span>Face the Darkness.</span> Live the Story.</div>
+
+    <div class="hud">
+      <div class="hud-bar"><span class="hud-label">HP</span><div class="hud-track"><div class="hud-fill hp"></div></div><span class="hud-val">100/100</span></div>
+      <div class="hud-bar"><span class="hud-label">MP</span><div class="hud-track"><div class="hud-fill mp"></div></div><span class="hud-val">85/100</span></div>
+      <div class="hud-bar"><span class="hud-label">XP</span><div class="hud-track"><div class="hud-fill xp"></div></div><span class="hud-val">LVL 1</span></div>
+    </div>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="label">DATE</div><div class="value">NOV 7, 2026</div></div>
+      <div class="hero-meta-item"><div class="label">TIME</div><div class="value">9AM - 2PM</div></div>
+      <div class="hero-meta-item"><div class="label">LOCATION</div><div class="value">LIFE CHAPEL</div></div>
+    </div>
+    <button class="hero-cta">PRESS START</button>
+  </div>
+  <div class="insert-coin">INSERT COIN TO CONTINUE...</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="section-label">- - THE QUEST - -</div>
+    <h2 class="section-title">Every man is living<br><span class="accent">inside a story.</span></h2>
+    <div class="about-text">
+      <p>But not every man has recognized the part he has been called to play.</p>
+      <p>FORGED 2026: The Quest is a one-day men's conference about accepting the call God has placed before you. Calling, courage, the stories that shape us, the enemies we still face, and the kind of life that becomes a legend worth passing down.</p>
+      <p class="highlight">You do not need someone else's gifts or someone else's story. The quest has found you.</p>
+    </div>
+    <div class="arc">
+      <div class="arc-step"><div class="badge">LVL 1</div><div class="label">CALLING</div></div>
+      <div class="arc-arrow">></div>
+      <div class="arc-step"><div class="badge">LVL 2</div><div class="label">FORMATION</div></div>
+      <div class="arc-arrow">></div>
+      <div class="arc-step"><div class="badge">LVL 3</div><div class="label">RESISTANCE</div></div>
+      <div class="arc-arrow">></div>
+      <div class="arc-step"><div class="badge">LVL 4</div><div class="label">LEGACY</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SESSIONS -->
+<section class="sessions" id="sessions">
+  <div class="container">
+    <div class="section-label">- - FOUR LEVELS - -</div>
+    <h2 class="section-title">The <span class="accent">Quest Log</span></h2>
+    <div class="session-grid">
+      <div class="session-card">
+        <div class="level-badge">LVL 1</div>
+        <div class="session-num">QUEST I</div>
+        <h3>The Quest Has Found You</h3>
+        <div class="session-question">Why me?</div>
+        <p>Gideon is hiding, afraid, and painfully aware of what he lacks. God addresses him according to divine calling rather than Gideon's self-assessment. You do not have to become another man before you can obey God.</p>
+        <div class="session-movement">CALLING</div>
+      </div>
+      <div class="session-card">
+        <div class="level-badge">LVL 2</div>
+        <div class="session-num">QUEST II</div>
+        <h3>The Stories We Tell Are the Stories We Live</h3>
+        <div class="session-question">What kind of man am I becoming?</div>
+        <p>Stories train desire. They give us heroes, villains, goals, fears, and visions of the good life. Become intentional about what you read, watch, admire, and place before your children.</p>
+        <div class="session-movement">FORMATION</div>
+      </div>
+      <div class="session-card">
+        <div class="level-badge">LVL 3</div>
+        <div class="session-num">QUEST III</div>
+        <h3>A Dead Dragon and Snakes in the Grass</h3>
+        <div class="session-question">If Christ has won, why is there still a battle?</div>
+        <p>The dragon has been slain, but the world still bears the effects of its rebellion. We do not fight for Christ's victory. We learn to live faithfully within it.</p>
+        <div class="session-movement">RESISTANCE</div>
+      </div>
+      <div class="session-card">
+        <div class="level-badge">LVL 4</div>
+        <div class="session-num">QUEST IV</div>
+        <h3>Building Your Legend</h3>
+        <div class="session-question">What story will my life tell?</div>
+        <p>Knights went on quests to build their legends. What story will they tell of you? Take on hard things and learn new things. The kind of life that becomes a legend.</p>
+        <div class="session-movement">LEGACY</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENDA -->
+<section class="agenda" id="agenda">
+  <div class="container">
+    <div class="section-label">- - NOVEMBER 7, 2026 - -</div>
+    <h2 class="section-title">The Day's <span class="accent">Walkthrough</span></h2>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-time">9:00 AM</div><div class="timeline-content"><div class="title">Doors Open & Breakfast</div><div class="desc">Biscuits & gravy. Coffee stations open all day.</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">9:55 AM</div><div class="timeline-content"><div class="title">5-Minute Countdown</div><div class="desc">"Select - Start" intro video game transition</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">10:00 AM</div><div class="timeline-content"><div class="title">Session 1 - The Quest Has Found You</div><div class="speaker">> Grant. 20 min</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">10:20 AM</div><div class="timeline-content"><div class="title">Worship</div><div class="desc">20 min</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">10:40 AM</div><div class="timeline-content"><div class="title">Session 2 - The Stories We Tell</div><div class="speaker">> Kristian Vaculik. 20 min</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">11:30 AM</div><div class="timeline-content"><div class="title">Lunch, Activities & Discussion Groups</div><div class="desc">Food trucks. Axe throwing. AI photowall. "What Knight Are You?" quiz. Discussion tables.</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">12:30 PM</div><div class="timeline-content"><div class="title">Session 3 - Dead Dragons and Snakes in the Grass</div><div class="speaker">> Pastor. 20 min. "Jesus Overcame" video transition</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">12:50 PM</div><div class="timeline-content"><div class="title">Worship</div><div class="desc">10 min</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">1:00 PM</div><div class="timeline-content"><div class="title">Session 4 - Building Your Legend</div><div class="speaker">> Pastor Jonathan Davis. 45 min. "Go now, brave knight..." video transition</div></div></div>
+      <div class="timeline-item"><div class="timeline-time">2:00 PM</div><div class="timeline-content"><div class="title">Quest Complete</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKERS -->
+<section class="speakers" id="speakers">
+  <div class="container">
+    <div class="section-label">- - YOUR PARTY - -</div>
+    <h2 class="section-title">The <span class="accent">Speakers</span></h2>
+    <div class="speaker-grid">
+      <div class="speaker-card">
+        <div class="speaker-avatar">G</div>
+        <h3>Grant</h3>
+        <div class="role">> Session 1 - Calling</div>
+        <p>The Quest Has Found You</p>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">KV</div>
+        <h3>Kristian Vaculik</h3>
+        <div class="role">> Session 2 - Formation</div>
+        <p>The Stories We Tell Are the Stories We Live</p>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-avatar">JD</div>
+        <h3>Pastor Jonathan Davis</h3>
+        <div class="role">> Sessions 3 & 4 - Resistance & Legacy</div>
+        <p>Dead Dragons / Building Your Legend</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section class="activities">
+  <div class="container">
+    <div class="section-label">- - SIDE QUESTS - -</div>
+    <h2 class="section-title">The <span class="accent">Activities</span></h2>
+    <div class="activity-grid">
+      <div class="activity-card"><div class="activity-icon">🪓</div><h4>Axe Throwing</h4><p>Test your aim</p></div>
+      <div class="activity-card"><div class="activity-icon">📸</div><h4>AI Photowall</h4><p>Share to LC Men's</p></div>
+      <div class="activity-card"><div class="activity-icon">🗡️</div><h4>What Knight Are You?</h4><p>Find your class</p></div>
+      <div class="activity-card"><div class="activity-icon">📖</div><h4>Discussion Tables</h4><p>Custom journals</p></div>
+      <div class="activity-card"><div class="activity-icon">📱</div><h4>QR Code Follow</h4><p>Join the guild</p></div>
+      <div class="activity-card"><div class="activity-icon">🍔</div><h4>Food Trucks</h4><p>Themed lunch</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- REGISTRATION -->
+<section class="registration" id="register">
+  <div class="container">
+    <div class="section-label">- - ANSWER THE CALL - -</div>
+    <h2 class="section-title">Choose Your <span class="accent">Path</span></h2>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Pre-Register</h3>
+        <div class="price-amount"><span class="currency">$</span>30</div>
+        <div class="desc">Register by October 1</div>
+        <ul class="price-features">
+          <li>Full Conference Access</li>
+          <li>Breakfast & Lunch</li>
+          <li>Forged Kit: canvas bag, t-shirt, coaster, leather bookmark, water</li>
+          <li>Custom Printed Journal</li>
+        </ul>
+        <button class="price-btn">SELECT</button>
+      </div>
+      <div class="price-card featured">
+        <h3>Sponsor a Knight</h3>
+        <div class="price-amount"><span class="currency">$</span>60</div>
+        <div class="desc">Register + Sponsor a Young Man</div>
+        <ul class="price-features">
+          <li>Everything in Pre-Register</li>
+          <li>Funds a Forged Kit for youth (12-15)</li>
+          <li>Supports Guest Speakers</li>
+          <li>Event Acknowledgement</li>
+        </ul>
+        <button class="price-btn">SELECT</button>
+      </div>
+      <div class="price-card">
+        <h3>Youth (12-15)</h3>
+        <div class="price-amount">FREE</div>
+        <div class="desc">Visit discussion table for kit</div>
+        <ul class="price-features">
+          <li>Full Conference Access</li>
+          <li>Breakfast & Lunch</li>
+          <li>Free Admission</li>
+          <li>Kit available at Ethan's table</li>
+        </ul>
+        <button class="price-btn">SELECT</button>
+      </div>
+    </div>
+    <div class="reg-note">At the door: <strong>$40</strong> // Merch while supplies last // Order by October 1</div>
+  </div>
+</section>
+
+<!-- MERCH -->
+<section class="activities">
+  <div class="container">
+    <div class="section-label">- - THE ARMORY - -</div>
+    <h2 class="section-title">Merch & <span class="accent">Loot</span></h2>
+    <div class="activity-grid">
+      <div class="activity-card"><div class="activity-icon">👕</div><h4>Forged T-Shirt</h4><p>One cool, one nerdy</p></div>
+      <div class="activity-card"><div class="activity-icon">🎒</div><h4>Canvas Bag</h4><p>In every kit</p></div>
+      <div class="activity-card"><div class="activity-icon">🔖</div><h4>Leather Bookmark</h4><p>Hand-stamped</p></div>
+      <div class="activity-card"><div class="activity-icon">🪵</div><h4>Engraved Coaster</h4><p>Wooden, branded</p></div>
+      <div class="activity-card"><div class="activity-icon">📖</div><h4>Pastor's Workbook</h4><p>Available for sale</p></div>
+      <div class="activity-card"><div class="activity-icon">💧</div><h4>Branded Water</h4><p>In every kit</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">FORGED '26</div>
+    <div class="footer-tag">Answer the Call. Face the Darkness. Live the Story.</div>
+    <div class="footer-links">
+      <a href="#about">Quest</a>
+      <a href="#sessions">Levels</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#register">Register</a>
+    </div>
+    <p>Life Chapel Toledo // Saturday, November 7, 2026 // 9AM - 2PM</p>
+    <p class="footer-bottom">(c) 2026 Life Chapel Toledo // FORGED: The Quest</p>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
