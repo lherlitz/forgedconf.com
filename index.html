@@ -198,23 +198,75 @@
   }
   .hero .tagline span { color: var(--green); }
 
-  /* HUD bars */
-  .hud {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    max-width: 400px;
-    margin: 0 auto 2rem;
-    text-align: left;
+  /* Knight forge animation */
+  .knight-stage {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    position: relative;
   }
-  .hud-bar { display: flex; align-items: center; gap: 0.5rem; }
-  .hud-label { font-family: 'Press Start 2P', monospace; font-size: 0.55rem; color: var(--fg-muted); min-width: 30px; }
-  .hud-track { flex: 1; height: 16px; background: var(--bg-3); border: 2px solid var(--border); position: relative; }
-  .hud-fill { height: 100%; transition: width 1s; }
-  .hud-fill.hp { background: var(--green); width: 100%; box-shadow: 0 0 8px rgba(74,222,128,0.3); }
-  .hud-fill.mp { background: var(--green-mid); width: 85%; box-shadow: 0 0 8px rgba(34,197,94,0.3); }
-  .hud-fill.xp { background: var(--green-dim); width: 60%; }
-  .hud-val { font-family: 'VT323', monospace; font-size: 1rem; color: var(--green); min-width: 50px; text-align: right; }
+  .knight-stage svg { width: 100%; height: 100%; image-rendering: pixelated; }
+
+  /* Knight body parts — each is a group we can transform */
+  .knight-arm-hammer {
+    transform-origin: 44px 48px;
+    animation: hammer-strike 0.4s steps(1) 0s 3 normal forwards;
+  }
+  .knight-sword {
+    opacity: 0;
+    animation: sword-appear 0.01s linear 1.2s 1 normal forwards;
+  }
+  .knight-arm-lift {
+    transform-origin: 44px 48px;
+    opacity: 0;
+    animation: sword-lift 0.6s ease-out 1.2s 1 normal forwards;
+  }
+  .knight-spark {
+    opacity: 0;
+    animation: spark-flash 0.1s steps(1) 0s 3 normal forwards;
+  }
+
+  /* Hammer strikes: raise arm up, then down — 3 times, then stops */
+  @keyframes hammer-strike {
+    0%  { transform: rotate(0deg); }
+    15% { transform: rotate(-40deg); }
+    20% { transform: rotate(-40deg); }
+    30% { transform: rotate(0deg); }
+    40% { transform: rotate(0deg); }
+    55% { transform: rotate(-40deg); }
+    60% { transform: rotate(-40deg); }
+    70% { transform: rotate(0deg); }
+    80% { transform: rotate(0deg); }
+    95% { transform: rotate(-40deg); }
+    100%{ transform: rotate(-40deg); }
+  }
+
+  /* Sword becomes visible after hammering */
+  @keyframes sword-appear {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Arm lifts sword above head */
+  @keyframes sword-lift {
+    0%   { opacity: 0; transform: rotate(0deg) translateY(0); }
+    1%   { opacity: 1; }
+    100% { opacity: 1; transform: rotate(-110deg) translateY(-5px); }
+  }
+
+  /* Sparks fly on each hammer strike */
+  @keyframes spark-flash {
+    0%  { opacity: 0; }
+    14% { opacity: 1; }
+    16% { opacity: 0; }
+    29% { opacity: 0; }
+    54% { opacity: 1; }
+    56% { opacity: 0; }
+    69% { opacity: 0; }
+    94% { opacity: 1; }
+    96% { opacity: 0; }
+    100%{ opacity: 0; }
+  }
 
   .hero-meta {
     display: flex;
@@ -645,10 +697,82 @@
     <div class="quest-sub">THE QUEST</div>
     <div class="tagline">Answer the Call. <span>Face the Darkness.</span> Live the Story.</div>
 
-    <div class="hud">
-      <div class="hud-bar"><span class="hud-label">HP</span><div class="hud-track"><div class="hud-fill hp"></div></div><span class="hud-val">100/100</span></div>
-      <div class="hud-bar"><span class="hud-label">MP</span><div class="hud-track"><div class="hud-fill mp"></div></div><span class="hud-val">85/100</span></div>
-      <div class="hud-bar"><span class="hud-label">XP</span><div class="hud-track"><div class="hud-fill xp"></div></div><span class="hud-val">LVL 1</span></div>
+    <div class="knight-stage">
+      <svg viewBox="0 0 100 100" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
+        <!-- Anvil -->
+        <rect x="35" y="60" width="30" height="6" fill="#22c55e"/>
+        <rect x="33" y="66" width="34" height="4" fill="#15803d"/>
+        <rect x="40" y="70" width="20" height="6" fill="#15803d"/>
+        <rect x="38" y="76" width="24" height="4" fill="#0a3d1a"/>
+
+        <!-- Knight body (static parts) -->
+        <!-- Legs -->
+        <rect x="36" y="70" width="6" height="10" fill="#22c55e"/>
+        <rect x="58" y="70" width="6" height="10" fill="#22c55e"/>
+        <!-- Boots -->
+        <rect x="34" y="80" width="10" height="5" fill="#15803d"/>
+        <rect x="56" y="80" width="10" height="5" fill="#15803d"/>
+        <!-- Torso -->
+        <rect x="36" y="50" width="28" height="22" fill="#4ade80"/>
+        <rect x="36" y="50" width="28" height="3" fill="#22c55e"/>
+        <!-- Belt -->
+        <rect x="36" y="68" width="28" height="3" fill="#15803d"/>
+        <!-- Head + helmet -->
+        <rect x="40" y="38" width="20" height="14" fill="#22c55e"/>
+        <rect x="40" y="38" width="20" height="3" fill="#4ade80"/>
+        <rect x="42" y="44" width="16" height="3" fill="#0a3d1a"/>
+        <!-- Helmet plume -->
+        <rect x="46" y="34" width="8" height="5" fill="#6bff6b"/>
+
+        <!-- Left arm (static, resting on anvil) -->
+        <rect x="30" y="52" width="6" height="14" fill="#22c55e"/>
+
+        <!-- Right arm with hammer (animated) -->
+        <g class="knight-arm-hammer">
+          <rect x="44" y="48" width="6" height="14" fill="#22c55e"/>
+          <!-- Hammer handle -->
+          <rect x="48" y="40" width="3" height="16" fill="#15803d"/>
+          <!-- Hammer head -->
+          <rect x="45" y="36" width="9" height="6" fill="#4ade80"/>
+          <rect x="45" y="36" width="9" height="2" fill="#6bff6b"/>
+        </g>
+
+        <!-- Sparks (appear on each strike) -->
+        <g class="knight-spark">
+          <rect x="42" y="56" width="2" height="2" fill="#6bff6b"/>
+          <rect x="46" y="54" width="2" height="2" fill="#6bff6b"/>
+          <rect x="50" y="57" width="2" height="2" fill="#6bff6b"/>
+          <rect x="54" y="55" width="2" height="2" fill="#6bff6b"/>
+          <rect x="38" y="55" width="2" height="2" fill="#4ade80"/>
+          <rect x="58" y="56" width="2" height="2" fill="#4ade80"/>
+        </g>
+
+        <!-- Sword on anvil (appears after forging) -->
+        <g class="knight-sword">
+          <!-- Blade -->
+          <rect x="49" y="44" width="2" height="18" fill="#4ade80"/>
+          <rect x="49" y="44" width="1" height="18" fill="#6bff6b"/>
+          <!-- Crossguard -->
+          <rect x="45" y="62" width="10" height="3" fill="#15803d"/>
+          <!-- Handle -->
+          <rect x="49" y="65" width="2" height="6" fill="#15803d"/>
+          <!-- Pommel -->
+          <rect x="48" y="71" width="4" height="2" fill="#22c55e"/>
+        </g>
+
+        <!-- Right arm lifting sword (animated, replaces hammer arm) -->
+        <g class="knight-arm-lift">
+          <rect x="44" y="48" width="6" height="14" fill="#22c55e"/>
+          <!-- Sword in hand, raised above head -->
+          <rect x="46" y="14" width="2" height="36" fill="#4ade80"/>
+          <rect x="46" y="14" width="1" height="36" fill="#6bff6b"/>
+          <!-- Crossguard -->
+          <rect x="42" y="48" width="10" height="3" fill="#15803d"/>
+          <!-- Glow -->
+          <rect x="44" y="12" width="6" height="4" fill="#6bff6b" opacity="0.4"/>
+          <rect x="45" y="10" width="4" height="2" fill="#6bff6b" opacity="0.2"/>
+        </g>
+      </svg>
     </div>
 
     <div class="hero-meta">
