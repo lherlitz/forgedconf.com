@@ -735,24 +735,6 @@
         </ul>
       </div>
 
-      <!-- Sponsor -->
-      <div class="path-card" data-path="sponsor" onclick="selectPath('sponsor')">
-        <div class="path-header">
-          <div class="path-icon">🛡️</div>
-          <div class="path-info">
-            <div class="path-name">SPONSOR A KNIGHT</div>
-            <div class="path-price">$70</div>
-          </div>
-        </div>
-        <div class="path-desc">Register with kit + sponsor a young man (12-15) to attend free.</div>
-        <ul class="path-features">
-          <li>Everything in Level Up</li>
-          <li>Funds a full Forged Kit for a young man</li>
-          <li>Supports Guest Speakers</li>
-          <li>Acknowledgement at event</li>
-        </ul>
-      </div>
-
       <!-- Youth -->
       <div class="path-card" data-path="youth" onclick="selectPath('youth')">
         <div class="path-header">
@@ -909,7 +891,7 @@
   const pathInfo = {
     free:    { name: 'Free Registration', price: 0 },
     kit:     { name: 'Level Up - Forged Kit', price: 35 },
-    sponsor: { name: 'Sponsor a Knight', price: 70 },
+    sponsor: { name: 'Sponsor a Knight', price: 70 }, // removed but kept for safety
     youth:   { name: 'Youth (12-15)', price: 0 }
   };
 
@@ -979,7 +961,7 @@
   }
 
   function proceedFromPath() {
-    if (state.path === 'kit' || state.path === 'sponsor') {
+    if (state.path === 'kit') {
       goToScreen('levelup');
     } else {
       // Free or Youth - skip level up, go to confirm
