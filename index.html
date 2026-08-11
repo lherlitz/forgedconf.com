@@ -467,9 +467,12 @@
   .activities { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%); }
   .activity-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     margin-top: 2rem;
+  }
+  @media (max-width: 600px) {
+    .activity-grid { grid-template-columns: repeat(2, 1fr); }
   }
   .activity-card {
     text-align: center;
