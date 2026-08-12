@@ -198,94 +198,67 @@
   }
   .hero .tagline span { color: var(--green); }
 
-  /* Knight forge animation */
-  .knight-stage {
-    width: 200px;
-    height: 200px;
-    margin: 0 auto 1.5rem;
+  /* RPG Quest Dialog Box */
+  .quest-dialog {
+    max-width: 420px;
+    margin: 0 auto 2rem;
+    background: var(--bg-3);
+    border: 3px solid var(--green-dim);
+    padding: 0;
     position: relative;
-  }
-  .knight-stage svg {
-    width: 100%; height: 100%;
-    image-rendering: pixelated;
-    filter: drop-shadow(0 0 10px rgba(74,222,128,0.35));
-  }
-  .knight-forge {
-    position: absolute; top: 0; left: 0;
-    animation: forge-fade 4s ease-in 0s 1 normal forwards;
-  }
-  .knight-hero {
-    position: absolute; top: 0; left: 0;
+    animation: dialog-appear 0.4s ease-out 0s 1 normal forwards;
     opacity: 0;
-    animation: hero-fade-in 1s ease-in 3s 1 normal forwards;
   }
-  @keyframes forge-fade {
-    0%   { opacity: 1; }
-    75%  { opacity: 1; }
-    100% { opacity: 0; }
+  @keyframes dialog-appear {
+    0%   { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
-  @keyframes hero-fade-in {
-    0%   { opacity: 0; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
+  /* Corner brackets for that RPG box look */
+  .quest-dialog::before, .quest-dialog::after {
+    content: '';
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--green);
+  }
+  .quest-dialog::before { top: -3px; left: -3px; }
+  .quest-dialog::after { bottom: -3px; right: -3px; }
+
+  .quest-dialog-header {
+    background: var(--green-dim);
+    padding: 0.4rem 1rem;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.55rem;
+    color: var(--bg);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
-  /* Hammer arm — pivots at shoulder */
-  .knight-arm-hammer {
-    transform-origin: 55px 45px;
-    animation: hammer-strike 3.6s ease-in-out 0s 1 normal forwards;
+  .quest-dialog-body {
+    padding: 1.2rem 1.5rem;
+    text-align: left;
   }
-  /* Sword on anvil — appears after 3rd strike */
-  .knight-sword {
-    opacity: 0;
-    animation: sword-appear 0.3s ease-in 2.9s 1 normal forwards;
+  .quest-dialog-text {
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    color: var(--fg);
+    line-height: 1.4;
+    margin-bottom: 1rem;
   }
-  /* Sparks on each strike */
-  .knight-spark {
-    opacity: 0;
-    animation: spark-flash 3.6s steps(1) 0s 1 normal forwards;
-  }
+  .quest-dialog-text .accent { color: var(--green); }
 
-  /* Side-profile hammer: wind up, strike down, pause, repeat 3x */
-  @keyframes hammer-strike {
-    0%   { transform: rotate(0deg); }
-    8%   { transform: rotate(-50deg); }
-    14%  { transform: rotate(-50deg); }
-    18%  { transform: rotate(15deg); }
-    22%  { transform: rotate(15deg); }
-    25%  { transform: rotate(0deg); }
-    28%  { transform: rotate(0deg); }
-    36%  { transform: rotate(-50deg); }
-    42%  { transform: rotate(-50deg); }
-    46%  { transform: rotate(15deg); }
-    50%  { transform: rotate(15deg); }
-    53%  { transform: rotate(0deg); }
-    56%  { transform: rotate(0deg); }
-    64%  { transform: rotate(-50deg); }
-    70%  { transform: rotate(-50deg); }
-    74%  { transform: rotate(15deg); }
-    78%  { transform: rotate(15deg); }
-    81%  { transform: rotate(0deg); }
-    100% { transform: rotate(0deg); }
+  .quest-dialog-prompt {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 0.6rem;
+    color: var(--green);
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
-
-  @keyframes sword-appear {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  .quest-dialog-prompt .arrow {
+    animation: blink 0.8s steps(2) infinite;
   }
-
-  @keyframes spark-flash {
-    0%   { opacity: 0; }
-    17%  { opacity: 0; }
-    18%  { opacity: 1; }
-    21%  { opacity: 0; }
-    47%  { opacity: 0; }
-    48%  { opacity: 1; }
-    51%  { opacity: 0; }
-    75%  { opacity: 0; }
-    76%  { opacity: 1; }
-    79%  { opacity: 0; }
-    100% { opacity: 0; }
-  }
+  @keyframes blink { 50% { opacity: 0; } }
 
   .hero-meta {
     display: flex;
@@ -716,63 +689,18 @@
     <div class="quest-sub">THE QUEST</div>
     <div class="tagline">Answer the Call. <span>Face the Darkness.</span> Live the Story.</div>
 
-    <div class="knight-stage">
-      <!-- ===== FORGE SCENE (side profile, fades out) ===== -->
-      <svg class="knight-forge" viewBox="0 0 100 100" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
-        <!-- Ground -->
-        <rect x="10" y="88" width="80" height="2" fill="#15803d" opacity="0.4"/>
-        <!-- Anvil -->
-        <rect x="55" y="58" width="20" height="5" fill="#6bff6b"/>
-        <rect x="53" y="63" width="24" height="3" fill="#4ade80"/>
-        <rect x="58" y="66" width="14" height="8" fill="#22c55e"/>
-        <rect x="56" y="74" width="18" height="3" fill="#15803d"/>
-        <!-- Legs -->
-        <rect x="30" y="70" width="5" height="14" fill="#6bff6b"/>
-        <rect x="38" y="70" width="5" height="14" fill="#4ade80"/>
-        <rect x="28" y="84" width="8" height="4" fill="#22c55e"/>
-        <rect x="36" y="84" width="8" height="4" fill="#22c55e"/>
-        <!-- Torso -->
-        <rect x="30" y="48" width="18" height="24" fill="#6bff6b"/>
-        <rect x="30" y="48" width="18" height="3" fill="#b8e6b8"/>
-        <rect x="30" y="68" width="18" height="3" fill="#15803d"/>
-        <!-- Head + helmet (facing right) -->
-        <rect x="40" y="36" width="16" height="14" fill="#6bff6b"/>
-        <rect x="40" y="36" width="16" height="3" fill="#b8e6b8"/>
-        <rect x="46" y="42" width="8" height="3" fill="#0a3d1a"/>
-        <rect x="54" y="42" width="2" height="6" fill="#4ade80"/>
-        <rect x="36" y="32" width="6" height="5" fill="#6bff6b"/>
-        <rect x="34" y="30" width="4" height="3" fill="#6bff6b" opacity="0.5"/>
-        <!-- Left arm -->
-        <rect x="28" y="50" width="5" height="16" fill="#4ade80"/>
-        <!-- Hammer arm (animated) -->
-        <g class="knight-arm-hammer">
-          <rect x="48" y="43" width="5" height="14" fill="#4ade80"/>
-          <rect x="52" y="48" width="14" height="3" fill="#15803d"/>
-          <rect x="64" y="44" width="6" height="8" fill="#b8e6b8"/>
-          <rect x="64" y="44" width="6" height="2" fill="#6bff6b"/>
-        </g>
-        <!-- Sparks -->
-        <g class="knight-spark">
-          <rect x="58" y="54" width="2" height="2" fill="#ffffff"/>
-          <rect x="62" y="52" width="2" height="2" fill="#6bff6b"/>
-          <rect x="66" y="55" width="2" height="2" fill="#ffffff"/>
-          <rect x="70" y="53" width="2" height="2" fill="#6bff6b"/>
-          <rect x="55" y="53" width="2" height="2" fill="#b8e6b8"/>
-          <rect x="73" y="54" width="2" height="2" fill="#b8e6b8"/>
-        </g>
-        <!-- Sword on anvil -->
-        <g class="knight-sword">
-          <rect x="63" y="34" width="3" height="26" fill="#b8e6b8"/>
-          <rect x="63" y="34" width="1" height="26" fill="#ffffff"/>
-          <rect x="59" y="58" width="11" height="3" fill="#4ade80"/>
-          <rect x="61" y="30" width="7" height="6" fill="#6bff6b" opacity="0.4"/>
-        </g>
-      </svg>
-
-      <!-- ===== HERO KNIGHT (front-facing, fades in) ===== -->
-      <svg class="knight-hero" viewBox="0 0 100 100" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg">
-        <image href="knight-hero.png" x="0" y="0" width="100" height="100" image-rendering="pixelated"/>
-      </svg>
+    <div class="quest-dialog">
+      <div class="quest-dialog-header">! QUEST AVAILABLE</div>
+      <div class="quest-dialog-body">
+        <div class="quest-dialog-text">
+          The Quest has found you.<br>
+          <span class="accent">You do not need someone else's gifts or someone else's story.</span><br>
+          God has called you where you are, with what you have, for where you are now.
+        </div>
+        <div class="quest-dialog-prompt">
+          <span class="arrow">▶</span> ACCEPT QUEST
+        </div>
+      </div>
     </div>
 
     <div class="hero-meta">
