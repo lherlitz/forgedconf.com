@@ -590,15 +590,6 @@
   }
   .info-box strong { color: var(--green); }
 
-  .youth-note {
-    text-align: center;
-    font-family: 'VT323', monospace;
-    font-size: 1.1rem;
-    color: var(--fg-dim);
-    margin-top: 1.5rem;
-  }
-  .youth-note a { color: var(--green); cursor: pointer; text-decoration: underline; }
-
   @media (max-width: 600px) {
     .container { padding: 0 1rem; }
     .form-row { flex-direction: column; gap: 0; }
@@ -870,7 +861,7 @@
       <h3>- - NEXT STEPS - -</h3>
       <li>Check your email for confirmation</li>
       <li>Add November 7 to your calendar</li>
-      <li>Bring a friend or your son (12-15 attend free)</li>
+      <li>Bring a friend</li>
       <li>Follow LC Men's on social for updates</li>
     </div>
 
@@ -889,9 +880,7 @@
 
   const pathInfo = {
     free:    { name: 'Free Registration', price: 0 },
-    kit:     { name: 'Level Up - Forged Kit', price: 35 },
-    sponsor: { name: 'Sponsor a Knight', price: 70 }, // removed but kept for safety
-    youth:   { name: 'Youth (12-15)', price: 0 } // removed but kept for safety
+    kit:     { name: 'Level Up - Forged Kit', price: 35 }
   };
 
   // === SCREEN NAVIGATION ===
