@@ -249,10 +249,13 @@
   .quest-dialog-text .cursor {
     display: inline-block;
     width: 8px;
+    height: 1.1rem;
     background: var(--green);
-    animation: blink 0.5s steps(2) infinite;
+    vertical-align: text-bottom;
     margin-left: 2px;
+    animation: cursor-blink 0.6s steps(2) infinite;
   }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
   .quest-dialog-prompt {
     font-family: 'Press Start 2P', monospace;
     font-size: 0.6rem;
@@ -944,39 +947,46 @@
     const prompt = document.getElementById('questPrompt');
     let lineIdx = 0;
     let charIdx = 0;
-    let currentLine = '';
+
+    function render() {
+      let html = '';
+      for (let i = 0; i <= lineIdx && i < lines.length; i++) {
+        if (i > 0) html += '<br>';
+        const line = lines[i];
+        const typed = i < lineIdx ? line.text : line.text.slice(0, charIdx);
+        if (line.accent) html += '<span class="accent">' + typed + '</span>';
+        else html += typed;
+      }
+      // Add blinking cursor at the end
+      html += '<span class="cursor">&nbsp;</span>';
+      el.innerHTML = html;
+    }
 
     function typeNext() {
       if (lineIdx >= lines.length) {
-        // Done typing — show the ACCEPT QUEST prompt
-        el.innerHTML = currentLine;
+        // Done typing — render final text without cursor, show prompt
+        let html = '';
+        for (let i = 0; i < lines.length; i++) {
+          if (i > 0) html += '<br>';
+          if (lines[i].accent) html += '<span class="accent">' + lines[i].text + '</span>';
+          else html += lines[i].text;
+        }
+        el.innerHTML = html;
         prompt.classList.add('visible');
         return;
       }
 
       const line = lines[lineIdx];
-      if (charIdx === 0) {
-        // Start of a new line — add line break if not first
-        if (lineIdx > 0) currentLine += '<br>';
-        if (line.accent) currentLine += '<span class="accent">';
-      }
-
-      currentLine += line.text[charIdx];
       charIdx++;
 
-      // Update display with cursor
-      let display = currentLine;
-      if (line.accent && charIdx >= line.text.length) display += '</span>';
-      else if (line.accent) display += line.text.slice(charIdx) + '</span>';
-      el.innerHTML = display + '<span class="cursor">&nbsp;</span>';
-
       if (charIdx >= line.text.length) {
-        // Line complete — close accent span if needed, move to next line
-        if (line.accent) currentLine += '</span>';
+        // Line complete — move to next line
         lineIdx++;
         charIdx = 0;
+        render();
         setTimeout(typeNext, 400); // pause between lines
       } else {
+        render();
         setTimeout(typeNext, 35); // typing speed
       }
     }
