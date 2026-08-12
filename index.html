@@ -303,13 +303,20 @@
   }
   .hero-cta:active { box-shadow: 0 2px 0 var(--green-dim); transform: translateY(4px); }
 
-  .insert-coin {
+  .continue-prompt {
     position: absolute;
     bottom: 1.5rem; left: 50%; transform: translateX(-50%);
     font-family: 'VT323', monospace;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--fg-dim);
     animation: blink 1s steps(2) infinite;
+    white-space: nowrap;
+  }
+  .continue-prompt .desktop { display: inline; }
+  .continue-prompt .mobile { display: none; }
+  @media (max-width: 768px) {
+    .continue-prompt .desktop { display: none; }
+    .continue-prompt .mobile { display: inline; }
   }
   @keyframes blink { 50% { opacity: 0; } }
 
@@ -710,7 +717,7 @@
     </div>
     <button class="hero-cta">PRESS START</button>
   </div>
-  <div class="insert-coin">INSERT COIN TO CONTINUE...</div>
+  <div class="continue-prompt"><span class="desktop">PRESS SPACE TO CONTINUE</span><span class="mobile">TAP TO CONTINUE</span></div>
 </section>
 
 <!-- ABOUT -->
