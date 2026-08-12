@@ -243,9 +243,16 @@
     color: var(--fg);
     line-height: 1.4;
     margin-bottom: 1rem;
+    min-height: 5.5rem;
   }
   .quest-dialog-text .accent { color: var(--green); }
-
+  .quest-dialog-text .cursor {
+    display: inline-block;
+    width: 8px;
+    background: var(--green);
+    animation: blink 0.5s steps(2) infinite;
+    margin-left: 2px;
+  }
   .quest-dialog-prompt {
     font-family: 'Press Start 2P', monospace;
     font-size: 0.6rem;
@@ -254,7 +261,10 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
+  .quest-dialog-prompt.visible { opacity: 1; }
   .quest-dialog-prompt .arrow {
     animation: blink 0.8s steps(2) infinite;
   }
@@ -699,12 +709,8 @@
     <div class="quest-dialog">
       <div class="quest-dialog-header">! QUEST AVAILABLE</div>
       <div class="quest-dialog-body">
-        <div class="quest-dialog-text">
-          The Quest has found you.<br>
-          <span class="accent">You do not need someone else's gifts or someone else's story.</span><br>
-          God has called you where you are, with what you have, for where you are now.
-        </div>
-        <div class="quest-dialog-prompt">
+        <div class="quest-dialog-text" id="questText"></div>
+        <div class="quest-dialog-prompt" id="questPrompt">
           <span class="arrow">▶</span> ACCEPT QUEST
         </div>
       </div>
@@ -925,6 +931,59 @@
       if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
   });
+
+  // RPG typewriter effect for quest dialog
+  (function() {
+    const lines = [
+      { text: "The Quest has found you.", accent: false },
+      { text: "You do not need someone else's gifts or someone else's story.", accent: true },
+      { text: "God has called you where you are, with what you have, for where you are now.", accent: false }
+    ];
+
+    const el = document.getElementById('questText');
+    const prompt = document.getElementById('questPrompt');
+    let lineIdx = 0;
+    let charIdx = 0;
+    let currentLine = '';
+
+    function typeNext() {
+      if (lineIdx >= lines.length) {
+        // Done typing — show the ACCEPT QUEST prompt
+        el.innerHTML = currentLine;
+        prompt.classList.add('visible');
+        return;
+      }
+
+      const line = lines[lineIdx];
+      if (charIdx === 0) {
+        // Start of a new line — add line break if not first
+        if (lineIdx > 0) currentLine += '<br>';
+        if (line.accent) currentLine += '<span class="accent">';
+      }
+
+      currentLine += line.text[charIdx];
+      charIdx++;
+
+      // Update display with cursor
+      let display = currentLine;
+      if (line.accent && charIdx >= line.text.length) display += '</span>';
+      else if (line.accent) display += line.text.slice(charIdx) + '</span>';
+      el.innerHTML = display + '<span class="cursor">&nbsp;</span>';
+
+      if (charIdx >= line.text.length) {
+        // Line complete — close accent span if needed, move to next line
+        if (line.accent) currentLine += '</span>';
+        lineIdx++;
+        charIdx = 0;
+        setTimeout(typeNext, 400); // pause between lines
+      } else {
+        setTimeout(typeNext, 35); // typing speed
+      }
+    }
+
+    // Start typing after the dialog box appears
+    setTimeout(typeNext, 600);
+  })();
 </script>
 </body>
 </html>
