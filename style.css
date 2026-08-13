@@ -332,6 +332,7 @@ nav .nav-links a:hover { color: var(--green); }
   color: var(--fg-dim);
   animation: blink 1s steps(2) infinite;
   white-space: nowrap;
+  cursor: pointer;
 }
 .continue-prompt .desktop { display: inline; }
 .continue-prompt .mobile { display: none; }
@@ -767,68 +768,6 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   color: var(--fg-muted);
   margin-bottom: 2.5rem;
 }
-
-/* === REGISTER: start screen === */
-.start-screen .container { text-align: center; }
-.start-emblem {
-  width: 120px; height: 120px;
-  margin: 0 auto 2rem;
-  opacity: 0.8;
-}
-.start-tagline {
-  font-family: 'VT323', monospace;
-  font-size: 1.4rem;
-  color: var(--fg-muted);
-  margin-bottom: 1.5rem;
-}
-.start-tagline span { color: var(--green); }
-.start-meta {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  margin-bottom: 2.5rem;
-  flex-wrap: wrap;
-}
-.start-meta-item .label {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.5rem;
-  letter-spacing: 0.1em;
-  color: var(--fg-muted);
-  margin-bottom: 0.3rem;
-}
-.start-meta-item .value {
-  font-family: 'VT323', monospace;
-  font-size: 1.2rem;
-  color: var(--green);
-}
-
-/* Big start button */
-.big-btn {
-  display: inline-block;
-  padding: 1.2rem 3rem;
-  background: var(--green);
-  color: var(--bg);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s;
-  box-shadow: 0 6px 0 var(--green-dim);
-  text-decoration: none;
-}
-.big-btn:hover { background: var(--green-bright); box-shadow: 0 6px 0 var(--green-mid); transform: translateY(-2px); }
-.big-btn:active { box-shadow: 0 2px 0 var(--green-dim); transform: translateY(4px); }
-.big-btn.secondary {
-  background: transparent;
-  color: var(--green);
-  border: 2px solid var(--green-dim);
-  box-shadow: none;
-}
-.big-btn.secondary:hover { border-color: var(--green); background: var(--bg-3); box-shadow: none; }
-
-.blink { animation: blink 1s steps(2) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
 
 /* === REGISTER: forms === */
 .form-card {

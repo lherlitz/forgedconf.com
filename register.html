@@ -34,12 +34,12 @@
     <a href="index.html" class="logo">FORGED '26</a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="#" onclick="goToScreen('path'); return false;">Register</a>
+      <a href="#" onclick="goToScreen('character'); return false;">Register</a>
     </div>
   </div>
 </nav>
 
-<!-- PROGRESS BAR (hidden on start screen) -->
+<!-- PROGRESS BAR (hidden on complete screen) -->
 <div class="progress-section" id="progressSection" style="display:none;">
   <div class="progress-bar-wrap">
     <div class="progress-label">
@@ -57,36 +57,9 @@
 </div>
 
 <!-- ============================ -->
-<!-- SCREEN 1: PRESS START        -->
+<!-- SCREEN 1: CHARACTER CREATION  -->
 <!-- ============================ -->
-<div class="screen start-screen active" id="screen-start">
-  <div class="container">
-    <svg class="start-emblem" viewBox="0 0 120 120" fill="none">
-      <rect x="40" y="20" width="40" height="60" fill="none" stroke="#4ade80" stroke-width="2"/>
-      <rect x="35" y="15" width="50" height="5" fill="#4ade80"/>
-      <rect x="45" y="80" width="30" height="20" fill="none" stroke="#4ade80" stroke-width="2"/>
-      <rect x="50" y="30" width="20" height="10" fill="#4ade80" opacity="0.3"/>
-      <rect x="50" y="45" width="20" height="3" fill="#4ade80" opacity="0.2"/>
-      <rect x="50" y="52" width="20" height="3" fill="#4ade80" opacity="0.2"/>
-      <rect x="50" y="59" width="15" height="3" fill="#4ade80" opacity="0.2"/>
-    </svg>
-    <div class="screen-label">- - THE QUEST BEGINS - -</div>
-    <h1 class="screen-title">FORGED<br><span class="accent">THE QUEST</span></h1>
-    <div class="start-tagline">Answer the Call. <span>Face the Darkness.</span> Live the Story.</div>
-    <div class="start-meta">
-      <div class="start-meta-item"><div class="label">DATE</div><div class="value">NOV 7, 2026</div></div>
-      <div class="start-meta-item"><div class="label">TIME</div><div class="value">9AM - 2PM</div></div>
-      <div class="start-meta-item"><div class="label">LOCATION</div><div class="value">LIFE CHAPEL</div></div>
-    </div>
-    <button class="big-btn blink" onclick="goToScreen('character')">PRESS START</button>
-    <div class="screen-sub" style="margin-top: 1.5rem; font-size: 1rem;">> Registration takes 60 seconds</div>
-  </div>
-</div>
-
-<!-- ============================ -->
-<!-- SCREEN 2: CHARACTER CREATION  -->
-<!-- ============================ -->
-<div class="screen" id="screen-character">
+<div class="screen active" id="screen-character">
   <div class="container">
     <div class="screen-label">- - CHARACTER CREATION - -</div>
     <h2 class="screen-title">Enter Your <span class="accent">Name</span></h2>
@@ -117,9 +90,9 @@
     </div>
 
     <div class="btn-row">
-      <button class="step-btn secondary" onclick="goToScreen('start')">BACK</button>
       <button class="step-btn primary" id="charNext" onclick="validateCharacter()">CONTINUE</button>
     </div>
+    <div class="screen-sub" style="margin-top: 1.5rem; font-size: 1rem;">> Registration takes 60 seconds</div>
   </div>
 </div>
 
@@ -312,7 +285,7 @@
   };
 
   // === SCREEN NAVIGATION ===
-  const screens = ['start', 'character', 'path', 'levelup', 'confirm', 'complete'];
+  const screens = ['character', 'path', 'levelup', 'confirm', 'complete'];
   const steps = {
     character: { num: 1, label: 'CHARACTER CREATION', fill: 25 },
     path:      { num: 2, label: 'CHOOSE YOUR PATH', fill: 50 },
@@ -326,7 +299,7 @@
     document.getElementById('screen-' + name).classList.add('active');
     window.scrollTo(0, 0);
 
-    const showProgress = name !== 'start' && name !== 'complete';
+    const showProgress = name !== 'complete';
     document.getElementById('progressSection').style.display = showProgress ? 'block' : 'none';
 
     if (steps[name]) {
@@ -452,13 +425,16 @@
     document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
     document.querySelectorAll('.addon-check').forEach(c => c.classList.remove('checked'));
     document.getElementById('pathNext').disabled = true;
-    goToScreen('start');
+    goToScreen('character');
   }
 
   // Enter key support on character screen
   document.getElementById('screen-character').addEventListener('keypress', e => {
     if (e.key === 'Enter') validateCharacter();
   });
+
+  // Boot directly into character creation (PRESS START lives on the landing page)
+  goToScreen('character');
 </script>
 </body>
 </html>
