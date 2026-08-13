@@ -87,6 +87,7 @@ nav ul { display: flex; gap: 1.5rem; list-style: none; }
 nav ul a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); transition: color 0.15s; text-decoration: none; }
 nav ul a:hover { color: var(--green); }
 nav .nav-cta {
+  display: inline-block;
   padding: 0.5rem 1.2rem;
   background: var(--green);
   color: var(--bg);
@@ -97,6 +98,7 @@ nav .nav-cta {
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 0 var(--green-dim);
+  text-decoration: none;
 }
 nav .nav-cta:hover { background: var(--green-bright); box-shadow: 0 4px 0 var(--green-mid); }
 nav .nav-links { display: flex; gap: 1.2rem; align-items: center; }
@@ -270,6 +272,8 @@ nav .nav-links a:hover { color: var(--green); }
   gap: 0.5rem;
   opacity: 0;
   transition: opacity 0.3s;
+  cursor: pointer;
+  text-decoration: none;
 }
 .quest-dialog-prompt.visible { opacity: 1; }
 .quest-dialog-prompt .arrow {
@@ -311,6 +315,7 @@ nav .nav-links a:hover { color: var(--green); }
   transition: all 0.15s;
   box-shadow: 0 6px 0 var(--green-dim);
   text-shadow: none;
+  text-decoration: none;
 }
 .hero-cta:hover {
   background: var(--green-bright);
@@ -633,6 +638,8 @@ section { padding: 5rem 0; position: relative; }
   cursor: pointer;
   transition: all 0.15s;
   box-shadow: 0 4px 0 var(--green-dim);
+  text-align: center;
+  text-decoration: none;
 }
 .price-btn:hover { background: var(--green-bright); box-shadow: 0 4px 0 var(--green-mid); }
 .price-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--green-dim); }
