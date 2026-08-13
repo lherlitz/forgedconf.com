@@ -343,6 +343,27 @@
     // Start typing after the dialog box appears
     setTimeout(typeNext, 600);
   })();
+
+  // PRESS SPACE / TAP TO CONTINUE — advance from hero to the quest log
+  (function() {
+    const prompt = document.querySelector('.continue-prompt');
+    const hero = document.querySelector('.hero');
+    const target = document.getElementById('about');
+    if (!prompt || !hero || !target) return;
+
+    function heroInView() {
+      const r = hero.getBoundingClientRect();
+      return r.top < window.innerHeight && r.bottom > 0;
+    }
+    function scrollDown() {
+      if (heroInView()) target.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.code === 'Space') { e.preventDefault(); scrollDown(); }
+    });
+    prompt.addEventListener('click', scrollDown);
+  })();
 </script>
 </body>
 </html>
