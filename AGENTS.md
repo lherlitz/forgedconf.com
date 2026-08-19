@@ -21,7 +21,7 @@ Static marketing + registration site for the one-day men's conference (Nov 7, 20
 ## Conventions
 
 - All styling in `style.css` using the `:root` green palette vars (`--green`, `--fg`, `--border`, etc.) — never hardcode hex greens in HTML.
-- Fonts (Google Fonts, loaded in both `<head>`s): Press Start 2P (headings/buttons), VT323 (mono/terminal text), Cinzel (serif headings), Inter (body).
+- Fonts: VT323 (mono/terminal text), Cinzel (serif headings), Inter (body), and self-hosted Dogica Pixel (pixel headings/buttons via `fonts/dogicapixel.woff2`). Press Start 2P was replaced to avoid Adobe-only licensing.
 - Section labels follow the pattern `- - THE QUEST - -`; buttons/CTAs are ALL-CAPS game prompts.
 - Images referenced as relative `images/...` paths; OG/Twitter meta use absolute `https://forgedconf.com/...` URLs.
 - JS is inline per page (no external scripts). Keep it that way — no framework.

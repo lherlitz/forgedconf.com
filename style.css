@@ -24,6 +24,22 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+@font-face {
+  font-family: 'Dogica Pixel';
+  src: url('fonts/dogicapixel.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Dogica Pixel';
+  src: url('fonts/dogicapixelbold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg);
@@ -59,7 +75,7 @@ body::after {
   background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.4) 100%);
 }
 
-.pixel { font-family: 'Press Start 2P', monospace; }
+.pixel { font-family: 'Dogica Pixel', monospace; }
 .mono { font-family: 'VT323', monospace; }
 
 h1, h2, h3 { font-family: 'Cinzel', serif; font-weight: 700; }
@@ -82,7 +98,7 @@ body.register nav { position: sticky; top: 0; }
 
 nav .container { display: flex; align-items: center; justify-content: space-between; }
 body.register nav .container { max-width: 1200px; }
-nav .logo { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.05em; text-shadow: 0 0 10px rgba(74,222,128,0.4); text-decoration: none; }
+nav .logo { font-family: 'Dogica Pixel', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.05em; text-shadow: 0 0 10px rgba(74,222,128,0.4); text-decoration: none; }
 nav ul { display: flex; gap: 1.5rem; list-style: none; }
 nav ul a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); transition: color 0.15s; text-decoration: none; }
 nav ul a:hover { color: var(--green); }
@@ -91,7 +107,7 @@ nav .nav-cta {
   padding: 0.5rem 1.2rem;
   background: var(--green);
   color: var(--bg);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.05em;
   transition: all 0.15s;
@@ -179,7 +195,7 @@ nav .nav-links a:hover { color: var(--green); }
 .hero .pre-title::before { content: '> '; color: var(--green); }
 
 .hero h1 {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: clamp(1.8rem, 6vw, 4rem);
   line-height: 1.2;
   color: var(--green);
@@ -187,7 +203,7 @@ nav .nav-links a:hover { color: var(--green); }
   text-shadow: 0 0 20px rgba(74,222,128,0.3), 0 0 60px rgba(74,222,128,0.15);
 }
 .hero .quest-sub {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: clamp(1rem, 3vw, 2rem);
   color: var(--fg);
   letter-spacing: 0.1em;
@@ -232,7 +248,7 @@ nav .nav-links a:hover { color: var(--green); }
 .quest-dialog-header {
   background: var(--green-dim);
   padding: 0.4rem 1rem;
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.55rem;
   color: var(--bg);
   letter-spacing: 0.1em;
@@ -263,7 +279,7 @@ nav .nav-links a:hover { color: var(--green); }
 }
 @keyframes cursor-blink { 50% { opacity: 0; } }
 .quest-dialog-prompt {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   color: var(--green);
   letter-spacing: 0.1em;
@@ -289,7 +305,7 @@ nav .nav-links a:hover { color: var(--green); }
 }
 .hero-meta-item { text-align: center; }
 .hero-meta-item .label {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.5rem;
   letter-spacing: 0.1em;
   color: var(--fg-muted);
@@ -307,7 +323,7 @@ nav .nav-links a:hover { color: var(--green); }
   padding: 1rem 2.5rem;
   background: var(--green);
   color: var(--bg);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.85rem;
   letter-spacing: 0.05em;
   border: none;
@@ -340,7 +356,7 @@ nav .nav-links a:hover { color: var(--green); }
 /* === SECTION COMMON === */
 section { padding: 5rem 0; position: relative; }
 .section-label {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.3em;
   color: var(--green-dim);
@@ -348,7 +364,7 @@ section { padding: 5rem 0; position: relative; }
   margin-bottom: 1rem;
 }
 .section-title {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: clamp(1.2rem, 3vw, 2rem);
   text-align: center;
   color: var(--fg);
@@ -364,7 +380,7 @@ section { padding: 5rem 0; position: relative; }
   gap: 0.5rem;
   margin: 2rem 0;
 }
-.pixel-divider .dash { color: var(--green-dim); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; letter-spacing: 0.5em; }
+.pixel-divider .dash { color: var(--green-dim); font-family: 'Dogica Pixel', monospace; font-size: 0.5rem; letter-spacing: 0.5em; }
 
 /* === ABOUT === */
 .about { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%); }
@@ -399,7 +415,7 @@ section { padding: 5rem 0; position: relative; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   color: var(--green);
   background: var(--bg-3);
@@ -438,13 +454,13 @@ section { padding: 5rem 0; position: relative; }
   top: -10px; right: 10px;
   background: var(--green-dim);
   color: var(--fg);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.5rem;
   padding: 0.3rem 0.6rem;
   letter-spacing: 0.05em;
 }
 .session-num {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.55rem;
   color: var(--green-dim);
   margin-bottom: 0.5rem;
@@ -475,7 +491,7 @@ section { padding: 5rem 0; position: relative; }
   padding: 0.3rem 0.8rem;
   background: var(--bg-3);
   border: 1px solid var(--green-dim);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.5rem;
   color: var(--green);
   letter-spacing: 0.05em;
@@ -492,7 +508,7 @@ section { padding: 5rem 0; position: relative; }
 }
 .timeline-item:last-child { border-bottom: none; }
 .timeline-time {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.65rem;
   color: var(--green);
   min-width: 90px;
@@ -527,7 +543,7 @@ section { padding: 5rem 0; position: relative; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 1rem;
   color: var(--green);
   background: var(--bg-3);
@@ -595,7 +611,7 @@ section { padding: 5rem 0; position: relative; }
   top: -12px; left: 50%; transform: translateX(-50%);
   background: var(--green);
   color: var(--bg);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.5rem;
   padding: 0.3rem 0.8rem;
   letter-spacing: 0.05em;
@@ -607,7 +623,7 @@ section { padding: 5rem 0; position: relative; }
   margin-bottom: 0.5rem;
 }
 .price-amount {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 2rem;
   color: var(--green);
   margin: 1rem 0;
@@ -625,7 +641,7 @@ section { padding: 5rem 0; position: relative; }
   align-items: flex-start;
   gap: 0.5rem;
 }
-.price-features li::before { content: '>'; color: var(--green); font-size: 0.6rem; margin-top: 0.3rem; font-family: 'Press Start 2P', monospace; }
+.price-features li::before { content: '>'; color: var(--green); font-size: 0.6rem; margin-top: 0.3rem; font-family: 'Dogica Pixel', monospace; }
 .price-btn {
   display: block;
   width: 100%;
@@ -633,7 +649,7 @@ section { padding: 5rem 0; position: relative; }
   border: none;
   background: var(--green);
   color: var(--bg);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   cursor: pointer;
@@ -662,7 +678,7 @@ footer {
   border-top: 3px solid var(--border);
 }
 .footer-logo {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.9rem;
   color: var(--green);
   margin-bottom: 0.5rem;
@@ -692,7 +708,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 0.5rem;
 }
 .progress-label .step-name {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.55rem;
   color: var(--green);
   letter-spacing: 0.1em;
@@ -722,7 +738,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-top: 0.5rem;
 }
 .pip {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.45rem;
   color: var(--fg-dim);
   letter-spacing: 0.05em;
@@ -745,7 +761,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 }
 
 .screen-label {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   letter-spacing: 0.3em;
   color: var(--green-dim);
@@ -753,7 +769,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 0.8rem;
 }
 .screen-title {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: clamp(1.2rem, 4vw, 1.8rem);
   text-align: center;
   color: var(--fg);
@@ -781,7 +797,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 .form-group { margin-bottom: 1.2rem; }
 .form-group:last-child { margin-bottom: 0; }
 .form-label {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.55rem;
   color: var(--green);
   letter-spacing: 0.1em;
@@ -833,7 +849,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   content: '✓ SELECTED';
   position: absolute;
   top: 0.8rem; right: 0.8rem;
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.45rem;
   color: var(--green);
 }
@@ -856,7 +872,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 }
 .path-info { flex: 1; }
 .path-name {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.8rem;
   color: var(--fg);
   margin-bottom: 0.3rem;
@@ -885,13 +901,13 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   align-items: flex-start;
   gap: 0.5rem;
 }
-.path-features li::before { content: '>'; color: var(--green); font-family: 'Press Start 2P', monospace; font-size: 0.5rem; margin-top: 0.2rem; }
+.path-features li::before { content: '>'; color: var(--green); font-family: 'Dogica Pixel', monospace; font-size: 0.5rem; margin-top: 0.2rem; }
 
 .path-badge {
   display: inline-block;
   background: var(--green-dim);
   color: var(--fg);
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.45rem;
   padding: 0.2rem 0.5rem;
   letter-spacing: 0.05em;
@@ -906,7 +922,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 1.5rem;
 }
 .kit-preview h3 {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.7rem;
   color: var(--green);
   text-align: center;
@@ -936,7 +952,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 1.5rem;
 }
 .addon-section h3 {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   color: var(--green);
   margin-bottom: 1rem;
@@ -994,8 +1010,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   padding-top: 0.8rem;
   margin-top: 0.5rem;
 }
-.summary-total .summary-label { font-family: 'Press Start 2P', monospace; font-size: 0.7rem; color: var(--green); }
-.summary-total .summary-value { font-family: 'Press Start 2P', monospace; font-size: 1.1rem; color: var(--green); }
+.summary-total .summary-label { font-family: 'Dogica Pixel', monospace; font-size: 0.7rem; color: var(--green); }
+.summary-total .summary-value { font-family: 'Dogica Pixel', monospace; font-size: 1.1rem; color: var(--green); }
 
 /* === REGISTER: buttons === */
 .btn-row {
@@ -1006,7 +1022,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 }
 .step-btn {
   padding: 1rem 2rem;
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   border: none;
@@ -1035,7 +1051,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin: 0 auto 1.5rem;
 }
 .confirm-stamp {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   color: var(--green);
   margin-bottom: 0.5rem;
@@ -1071,7 +1087,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   text-align: left;
 }
 .confirm-next-steps h3 {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   color: var(--green);
   margin-bottom: 1rem;
@@ -1086,7 +1102,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   display: flex;
   gap: 0.5rem;
 }
-.confirm-next-steps li::before { content: '>'; color: var(--green); font-family: 'Press Start 2P', monospace; font-size: 0.6rem; margin-top: 0.2rem; }
+.confirm-next-steps li::before { content: '>'; color: var(--green); font-family: 'Dogica Pixel', monospace; font-size: 0.6rem; margin-top: 0.2rem; }
 
 /* === REGISTER: typewriter effect === */
 .typewriter {
