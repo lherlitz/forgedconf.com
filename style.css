@@ -4,25 +4,36 @@
    ============================================================ */
 
 :root {
-  /* Monochromatic green palette — Game Boy / phosphor CRT */
-  --bg: #0a120a;
-  --bg-2: #0f1c0f;
-  --bg-3: #162616;
-  --bg-card: #122012;
-  --green-bright: #6bff6b;
-  --green: #4ade80;
-  --green-mid: #22c55e;
-  --green-dim: #15803d;
-  --green-dark: #0a3d1a;
-  --green-darker: #05210e;
-  --fg: #b8e6b8;
-  --fg-muted: #5a8a5a;
-  --fg-dim: #3a5a3a;
-  --border: rgba(74,222,128,0.15);
-  --border-bright: rgba(74,222,128,0.3);
+  /* Greyson 2026 palette — style sheet 26-LC-Forged_Style Sheet.pdf */
+  --bg: #071821;          /* Ink Navy */
+  --bg-2: #084734;        /* Green 3 */
+  --bg-3: #0a3d28;        /* lifted Green 3 for card depth */
+  --bg-card: #0a2e26;
+
+  --green-bright: #FBF7EC; /* Parchment (high emphasis) */
+  --green: #CEF17B;        /* Green 2 (CTA / accent) */
+  --green-mid: #DEF7CE;    /* Green 1 (secondary accent) */
+  --green-dim: #084734;    /* Green 3 (borders on light surfaces) */
+  --green-dark: #052b1a;
+  --green-darker: #031812;
+
+  --fg: #DEF7CE;           /* Green 1 (body text) */
+  --fg-muted: rgba(222,247,206,0.65);
+  --fg-dim: rgba(222,247,206,0.40);
+
+  --border: rgba(222,247,206,0.15);
+  --border-bright: rgba(222,247,206,0.30);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+@font-face {
+  font-family: 'Times New Pixel';
+  src: url('fonts/TimesNewPixel.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @font-face {
   font-family: 'Dogica Pixel';
@@ -75,7 +86,7 @@ body::after {
   background: radial-gradient(ellipse at 50% 40%, transparent 30%, rgba(0,0,0,0.4) 100%);
 }
 
-.pixel { font-family: 'Dogica Pixel', monospace; }
+.pixel { font-family: 'Times New Pixel', 'Times New Pixel', 'Dogica Pixel', monospace; }
 .mono { font-family: 'VT323', monospace; }
 
 h1, h2, h3 { font-family: 'Cinzel', serif; font-weight: 700; }
@@ -88,7 +99,7 @@ body.register .container { max-width: 700px; padding: 0 1.5rem; }
 nav {
   left: 0; right: 0;
   z-index: 1000;
-  background: rgba(10,18,10,0.92);
+  background: rgba(7,24,33,0.92);
   backdrop-filter: blur(10px);
   border-bottom: 2px solid var(--border);
   padding: 0.75rem 0;
@@ -98,17 +109,26 @@ body.register nav { position: sticky; top: 0; }
 
 nav .container { display: flex; align-items: center; justify-content: space-between; }
 body.register nav .container { max-width: 1200px; }
-nav .logo { font-family: 'Dogica Pixel', monospace; font-size: 0.7rem; color: var(--green); letter-spacing: 0.05em; text-shadow: 0 0 10px rgba(74,222,128,0.4); text-decoration: none; }
+nav .logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+nav .logo img {
+  height: 52px;
+  width: auto;
+  display: block;
+}
 nav ul { display: flex; gap: 1.5rem; list-style: none; }
-nav ul a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); transition: color 0.15s; text-decoration: none; }
+nav ul a { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); transition: color 0.15s; text-decoration: none; }
 nav ul a:hover { color: var(--green); }
 nav .nav-cta {
   display: inline-block;
-  padding: 0.5rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   background: var(--green);
   color: var(--bg);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.6rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.7rem;
   letter-spacing: 0.05em;
   transition: all 0.15s;
   border: none;
@@ -130,8 +150,8 @@ nav .nav-links a:hover { color: var(--green); }
   text-align: center;
   position: relative;
   background:
-    radial-gradient(ellipse at 50% 40%, rgba(34,197,94,0.08) 0%, transparent 50%),
-    linear-gradient(180deg, #0a120a 0%, #0f1c0f 50%, #0a120a 100%);
+    radial-gradient(ellipse at 50% 40%, rgba(206,241,123,0.08) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 50%, var(--bg) 100%);
   overflow: hidden;
 }
 
@@ -149,7 +169,7 @@ nav .nav-links a:hover { color: var(--green); }
 .hero-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(180deg, rgba(10,18,10,0.55) 0%, rgba(10,18,10,0.35) 50%, rgba(10,18,10,0.7) 100%);
+  background: linear-gradient(180deg, rgba(7,24,33,0.55) 0%, rgba(7,24,33,0.35) 50%, rgba(7,24,33,0.7) 100%);
   z-index: 1;
 }
 
@@ -190,25 +210,33 @@ nav .nav-links a:hover { color: var(--green); }
   letter-spacing: 0.3em;
   color: var(--green-mid);
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 .hero .pre-title::before { content: '> '; color: var(--green); }
 
 .hero h1 {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: clamp(1.8rem, 6vw, 4rem);
-  line-height: 1.2;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: clamp(0.95rem, 3vw, 1.8rem);
+  line-height: 1.15;
   color: var(--green);
-  margin-bottom: 1rem;
-  text-shadow: 0 0 20px rgba(74,222,128,0.3), 0 0 60px rgba(74,222,128,0.15);
+  margin-bottom: 0.75rem;
+  text-shadow: 0 0 25px rgba(206,241,123,0.45), 0 0 80px rgba(206,241,123,0.25);
 }
 .hero .quest-sub {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: clamp(1rem, 3vw, 2rem);
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: clamp(1.1rem, 3vw, 2.2rem);
   color: var(--fg);
   letter-spacing: 0.1em;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 15px rgba(184,230,184,0.2);
+  margin-bottom: 1rem;
+  text-shadow: 0 0 15px rgba(222,247,206,0.2);
+}
+.hero .quest-sub img.hero-quest-logo {
+  height: clamp(6rem, 18vw, 13rem);
+  width: auto;
+  max-width: min(420px, 90vw);
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 22px rgba(206,241,123,0.7)) drop-shadow(0 0 70px rgba(206,241,123,0.4));
 }
 
 .hero .tagline {
@@ -248,8 +276,8 @@ nav .nav-links a:hover { color: var(--green); }
 .quest-dialog-header {
   background: var(--green-dim);
   padding: 0.4rem 1rem;
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.55rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.6rem;
   color: var(--bg);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -279,7 +307,7 @@ nav .nav-links a:hover { color: var(--green); }
 }
 @keyframes cursor-blink { 50% { opacity: 0; } }
 .quest-dialog-prompt {
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   color: var(--green);
   letter-spacing: 0.1em;
@@ -305,8 +333,8 @@ nav .nav-links a:hover { color: var(--green); }
 }
 .hero-meta-item { text-align: center; }
 .hero-meta-item .label {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.5rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.55rem;
   letter-spacing: 0.1em;
   color: var(--fg-muted);
   margin-bottom: 0.3rem;
@@ -320,11 +348,11 @@ nav .nav-links a:hover { color: var(--green); }
 .hero-cta {
   margin-top: 2rem;
   display: inline-block;
-  padding: 1rem 2.5rem;
+  padding: 1.1rem 2.8rem;
   background: var(--green);
   color: var(--bg);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.85rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 1rem;
   letter-spacing: 0.05em;
   border: none;
   cursor: pointer;
@@ -356,16 +384,16 @@ nav .nav-links a:hover { color: var(--green); }
 /* === SECTION COMMON === */
 section { padding: 5rem 0; position: relative; }
 .section-label {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.6rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.65rem;
   letter-spacing: 0.3em;
-  color: var(--green-dim);
+  color: var(--green-mid);
   text-align: center;
   margin-bottom: 1rem;
 }
 .section-title {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: clamp(1.2rem, 3vw, 2rem);
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: clamp(1.3rem, 3vw, 2.2rem);
   text-align: center;
   color: var(--fg);
   margin-bottom: 3rem;
@@ -380,7 +408,13 @@ section { padding: 5rem 0; position: relative; }
   gap: 0.5rem;
   margin: 2rem 0;
 }
-.pixel-divider .dash { color: var(--green-dim); font-family: 'Dogica Pixel', monospace; font-size: 0.5rem; letter-spacing: 0.5em; }
+.pixel-divider .dash { color: var(--green-dim); font-family: 'Times New Pixel', 'Dogica Pixel', monospace; font-size: 0.55rem; letter-spacing: 0.5em; }
+
+.section-bg {
+  position: relative;
+  overflow: hidden;
+}
+.section-bg > .container { position: relative; z-index: 1; }
 
 /* === ABOUT === */
 .about { background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%); }
@@ -415,11 +449,11 @@ section { padding: 5rem 0; position: relative; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 0.6rem;
   color: var(--green);
   background: var(--bg-3);
-  box-shadow: 0 0 15px rgba(34,197,94,0.1);
+  box-shadow: 0 0 15px rgba(206,241,123,0.1);
 }
 .arc-step .label {
   font-family: 'VT323', monospace;
@@ -427,7 +461,7 @@ section { padding: 5rem 0; position: relative; }
   color: var(--fg-muted);
   letter-spacing: 0.1em;
 }
-.arc-arrow { align-self: center; color: var(--green-dim); font-family: 'VT323', monospace; font-size: 1.5rem; }
+.arc-arrow { align-self: center; color: var(--green-mid); font-family: 'VT323', monospace; font-size: 1.5rem; }
 
 /* === SESSIONS === */
 .sessions { background: var(--bg); }
@@ -447,22 +481,22 @@ section { padding: 5rem 0; position: relative; }
 .session-card:hover {
   border-color: var(--green);
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(74,222,128,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(206,241,123,0.1);
 }
 .session-card .level-badge {
   position: absolute;
   top: -10px; right: 10px;
   background: var(--green-dim);
   color: var(--fg);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.5rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.55rem;
   padding: 0.3rem 0.6rem;
   letter-spacing: 0.05em;
 }
 .session-num {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.55rem;
-  color: var(--green-dim);
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.6rem;
+  color: var(--green-mid);
   margin-bottom: 0.5rem;
   letter-spacing: 0.1em;
 }
@@ -479,10 +513,10 @@ section { padding: 5rem 0; position: relative; }
   color: var(--green);
   margin-bottom: 0.8rem;
 }
-.session-question::before { content: '[?] '; color: var(--green-dim); }
+.session-question::before { content: '[?] '; color: var(--green-mid); }
 .session-card p {
   font-size: 0.85rem;
-  color: var(--fg-muted);
+  color: var(--fg);
   line-height: 1.6;
 }
 .session-movement {
@@ -491,8 +525,8 @@ section { padding: 5rem 0; position: relative; }
   padding: 0.3rem 0.8rem;
   background: var(--bg-3);
   border: 1px solid var(--green-dim);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.5rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.55rem;
   color: var(--green);
   letter-spacing: 0.05em;
 }
@@ -508,7 +542,7 @@ section { padding: 5rem 0; position: relative; }
 }
 .timeline-item:last-child { border-bottom: none; }
 .timeline-time {
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 0.65rem;
   color: var(--green);
   min-width: 90px;
@@ -543,11 +577,11 @@ section { padding: 5rem 0; position: relative; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 1rem;
   color: var(--green);
   background: var(--bg-3);
-  box-shadow: 0 0 15px rgba(34,197,94,0.1);
+  box-shadow: 0 0 15px rgba(206,241,123,0.1);
   overflow: hidden;
 }
 .speaker-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; image-rendering: pixelated; }
@@ -579,7 +613,7 @@ section { padding: 5rem 0; position: relative; }
   justify-content: center;
 }
 .activity-card:hover { border-color: var(--green); transform: scale(1.03); }
-.activity-icon { font-size: 1.8rem; margin-bottom: 0.5rem; filter: grayscale(0.3) brightness(0.9) sepia(0.5) hue-rotate(50deg) saturate(0.8); }
+.activity-icon { font-size: 1.8rem; margin-bottom: 0.5rem; filter: grayscale(0.2) brightness(1.05) sepia(0.3) hue-rotate(40deg) saturate(0.6); }
 .activity-card h4 { font-family: 'Cinzel', serif; font-size: 0.95rem; color: var(--fg); margin-bottom: 0.3rem; }
 .activity-card p { font-family: 'VT323', monospace; font-size: 1rem; color: var(--fg-muted); }
 
@@ -603,7 +637,7 @@ section { padding: 5rem 0; position: relative; }
 .price-card:hover { border-color: var(--green-dim); }
 .price-card.featured {
   border-color: var(--green);
-  box-shadow: 0 0 40px rgba(74,222,128,0.08);
+  box-shadow: 0 0 40px rgba(206,241,123,0.08);
 }
 .price-card.featured::before {
   content: 'RECOMMENDED LOADOUT';
@@ -611,8 +645,8 @@ section { padding: 5rem 0; position: relative; }
   top: -12px; left: 50%; transform: translateX(-50%);
   background: var(--green);
   color: var(--bg);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.5rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.6rem;
   padding: 0.3rem 0.8rem;
   letter-spacing: 0.05em;
 }
@@ -623,11 +657,11 @@ section { padding: 5rem 0; position: relative; }
   margin-bottom: 0.5rem;
 }
 .price-amount {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 2rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 2.2rem;
   color: var(--green);
   margin: 1rem 0;
-  text-shadow: 0 0 15px rgba(74,222,128,0.2);
+  text-shadow: 0 0 15px rgba(206,241,123,0.2);
 }
 .price-amount .currency { font-size: 1rem; vertical-align: top; }
 .price-card .desc { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 1.5rem; }
@@ -641,16 +675,16 @@ section { padding: 5rem 0; position: relative; }
   align-items: flex-start;
   gap: 0.5rem;
 }
-.price-features li::before { content: '>'; color: var(--green); font-size: 0.6rem; margin-top: 0.3rem; font-family: 'Dogica Pixel', monospace; }
+.price-features li::before { content: '>'; color: var(--green); font-size: 0.6rem; margin-top: 0.3rem; font-family: 'Times New Pixel', 'Dogica Pixel', monospace; }
 .price-btn {
   display: block;
   width: 100%;
-  padding: 0.9rem;
+  padding: 1rem;
   border: none;
   background: var(--green);
   color: var(--bg);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.7rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.85rem;
   letter-spacing: 0.05em;
   cursor: pointer;
   transition: all 0.15s;
@@ -678,18 +712,21 @@ footer {
   border-top: 3px solid var(--border);
 }
 .footer-logo {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.9rem;
-  color: var(--green);
+  display: flex;
+  justify-content: center;
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 10px rgba(74,222,128,0.3);
 }
-.footer-tag { font-family: 'VT323', monospace; font-size: 1.2rem; color: var(--fg-muted); margin-bottom: 1rem; }
+.footer-logo img {
+  height: 64px;
+  width: auto;
+  display: block;
+}
+.footer-tag { font-family: 'VT323', monospace; font-size: 1.2rem; color: var(--fg); margin-bottom: 1rem; }
 .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin: 1rem 0; flex-wrap: wrap; }
-.footer-links a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg-muted); text-decoration: none; }
+.footer-links a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg); text-decoration: none; }
 .footer-links a:hover { color: var(--green); }
-footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-muted); margin-bottom: 0.2rem; }
-.footer-bottom { font-size: 0.7rem; color: var(--fg-dim); margin-top: 1.5rem; font-family: 'Inter', sans-serif; }
+footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg); margin-bottom: 0.2rem; }
+.footer-bottom { font-size: 0.7rem; color: var(--fg-muted); margin-top: 1.5rem; font-family: 'Inter', sans-serif; }
 
 /* === REGISTER: progress bar === */
 .progress-section {
@@ -708,7 +745,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 0.5rem;
 }
 .progress-label .step-name {
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 0.55rem;
   color: var(--green);
   letter-spacing: 0.1em;
@@ -730,7 +767,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   background: var(--green);
   width: 0%;
   transition: width 0.5s ease;
-  box-shadow: 0 0 10px rgba(74,222,128,0.3);
+  box-shadow: 0 0 10px rgba(206,241,123,0.3);
 }
 .progress-pips {
   display: flex;
@@ -738,8 +775,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-top: 0.5rem;
 }
 .pip {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.45rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.5rem;
   color: var(--fg-dim);
   letter-spacing: 0.05em;
   transition: color 0.3s;
@@ -761,16 +798,16 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 }
 
 .screen-label {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.6rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.65rem;
   letter-spacing: 0.3em;
   color: var(--green-dim);
   text-align: center;
   margin-bottom: 0.8rem;
 }
 .screen-title {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: clamp(1.2rem, 4vw, 1.8rem);
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: clamp(1.3rem, 4vw, 2rem);
   text-align: center;
   color: var(--fg);
   margin-bottom: 0.5rem;
@@ -797,7 +834,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 .form-group { margin-bottom: 1.2rem; }
 .form-group:last-child { margin-bottom: 0; }
 .form-label {
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 0.55rem;
   color: var(--green);
   letter-spacing: 0.1em;
@@ -844,13 +881,13 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   position: relative;
 }
 .path-card:hover { border-color: var(--green-dim); transform: translateY(-2px); }
-.path-card.selected { border-color: var(--green); box-shadow: 0 0 25px rgba(74,222,128,0.1); }
+.path-card.selected { border-color: var(--green); box-shadow: 0 0 25px rgba(206,241,123,0.1); }
 .path-card.selected::after {
   content: '✓ SELECTED';
   position: absolute;
   top: 0.8rem; right: 0.8rem;
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.45rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.5rem;
   color: var(--green);
 }
 
@@ -872,8 +909,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 }
 .path-info { flex: 1; }
 .path-name {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.8rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.85rem;
   color: var(--fg);
   margin-bottom: 0.3rem;
 }
@@ -901,14 +938,14 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   align-items: flex-start;
   gap: 0.5rem;
 }
-.path-features li::before { content: '>'; color: var(--green); font-family: 'Dogica Pixel', monospace; font-size: 0.5rem; margin-top: 0.2rem; }
+.path-features li::before { content: '>'; color: var(--green); font-family: 'Times New Pixel', 'Dogica Pixel', monospace; font-size: 0.5rem; margin-top: 0.2rem; }
 
 .path-badge {
   display: inline-block;
   background: var(--green-dim);
   color: var(--fg);
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.45rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.5rem;
   padding: 0.2rem 0.5rem;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
@@ -922,8 +959,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 1.5rem;
 }
 .kit-preview h3 {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.7rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.75rem;
   color: var(--green);
   text-align: center;
   margin-bottom: 1.5rem;
@@ -940,7 +977,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   background: var(--bg);
   border: 1px solid var(--border);
 }
-.kit-item .icon { font-size: 2rem; margin-bottom: 0.4rem; filter: grayscale(0.3) brightness(0.9) sepia(0.5) hue-rotate(50deg) saturate(0.8); }
+.kit-item .icon { font-size: 2rem; margin-bottom: 0.4rem; filter: grayscale(0.2) brightness(1.05) sepia(0.3) hue-rotate(40deg) saturate(0.6); }
 .kit-item .name { font-family: 'VT323', monospace; font-size: 1rem; color: var(--fg); }
 .kit-item .note { font-size: 0.7rem; color: var(--fg-dim); }
 
@@ -952,8 +989,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin-bottom: 1.5rem;
 }
 .addon-section h3 {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.6rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.65rem;
   color: var(--green);
   margin-bottom: 1rem;
   letter-spacing: 0.1em;
@@ -1010,8 +1047,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   padding-top: 0.8rem;
   margin-top: 0.5rem;
 }
-.summary-total .summary-label { font-family: 'Dogica Pixel', monospace; font-size: 0.7rem; color: var(--green); }
-.summary-total .summary-value { font-family: 'Dogica Pixel', monospace; font-size: 1.1rem; color: var(--green); }
+.summary-total .summary-label { font-family: 'Times New Pixel', 'Dogica Pixel', monospace; font-size: 0.7rem; color: var(--green); }
+.summary-total .summary-value { font-family: 'Times New Pixel', 'Dogica Pixel', monospace; font-size: 1.1rem; color: var(--green); }
 
 /* === REGISTER: buttons === */
 .btn-row {
@@ -1022,7 +1059,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
 }
 .step-btn {
   padding: 1rem 2rem;
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   border: none;
@@ -1051,11 +1088,11 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   margin: 0 auto 1.5rem;
 }
 .confirm-stamp {
-  font-family: 'Dogica Pixel', monospace;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   color: var(--green);
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 30px rgba(74,222,128,0.3);
+  text-shadow: 0 0 30px rgba(206,241,123,0.3);
   animation: stampIn 0.6s ease;
 }
 @keyframes stampIn {
@@ -1087,8 +1124,8 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   text-align: left;
 }
 .confirm-next-steps h3 {
-  font-family: 'Dogica Pixel', monospace;
-  font-size: 0.6rem;
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.65rem;
   color: var(--green);
   margin-bottom: 1rem;
   text-align: center;
@@ -1102,7 +1139,7 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg-m
   display: flex;
   gap: 0.5rem;
 }
-.confirm-next-steps li::before { content: '>'; color: var(--green); font-family: 'Dogica Pixel', monospace; font-size: 0.6rem; margin-top: 0.2rem; }
+.confirm-next-steps li::before { content: '>'; color: var(--green); font-family: 'Times New Pixel', 'Dogica Pixel', monospace; font-size: 0.6rem; margin-top: 0.2rem; }
 
 /* === REGISTER: typewriter effect === */
 .typewriter {

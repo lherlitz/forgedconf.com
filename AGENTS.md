@@ -7,7 +7,7 @@ Static marketing + registration site for the one-day men's conference (Nov 7, 20
 - `index.html` — landing page (`<body class="landing">`): hero with typewriter quest dialog, about, 4 sessions, agenda timeline, speakers, activities, merch, registration pricing.
 - `register.html` — multi-screen registration flow (`<body class="register">`): start → character (name/email/phone) → path (free / $35 kit) → level-up add-ons → confirm → complete. All client-side, single inline `<script>`.
 - `style.css` — shared stylesheet for both pages; page-specific rules scoped under `body.landing` / `body.register`.
-- `images/` — castle-bg.png, forged-og.png (OG/social), grant-perry.png, favicons, apple-touch-icon.
+- `images/` — forged-og.png (OG/social), forged-thequest-logo-light.png, grant-perry.png, favicons, apple-touch-icon.
 - `CNAME` — `forgedconf.com` (GitHub Pages custom domain).
 
 ## Build & test
@@ -31,6 +31,5 @@ Static marketing + registration site for the one-day men's conference (Nov 7, 20
 
 - **Registration is a mock.** `register.html` generates a fake `FRGD-XXXXXX` confirmation ID and the payment note explicitly says no real payment is processed. The planned backend is Planning Center (Church Center); do not wire real checkout or claim registrations are real without asking.
 - No `.gitignore` — `.DS_Store` is untracked; don't commit it.
-- `castle-bg.png` is ~840 KB; keep image sizes in check (favicons/OG are small, hero bg is the only heavy asset).
 - The site is public and church-facing: no AI-tooling references, no ticket IDs, no dev jargon in page copy.
 - Speakers/agenda facts (Grant Perry, Kristian Vaculik, Pastor Jonathan Davis; $35 kit, $40 at door, Oct 17 pre-order deadline) are real event details — verify changes with Luc before editing.
