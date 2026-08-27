@@ -16,7 +16,12 @@ Static marketing + registration site for the one-day men's conference (Nov 7, 20
 
 ## Deploy
 
-`git push` to `origin` (github.com:lherlitz/forgedconf.com, branch `main`) — GitHub Pages serves the repo root. **Every push goes live immediately.** No staging, no CI.
+Deploys go to **Cloudflare Pages** (project `forgedconf`), NOT GitHub Pages. `git push` only backs up source — it does not deploy.
+
+- Full site + API function: `cd ~/Code/forged && wrangler pages deploy . --project-name forgedconf --branch main` (token in `~/.cloudflare-env`). Live in ~30s.
+- Backstop list-refresh Worker: `cd ~/Code/forged/workers/list-refresh && wrangler deploy`.
+- Secrets (PCO_PAT_ID, PCO_PAT_SECRET, RUN_LIST_REFRESH) live in the Pages project settings; PCO_PAT_* also on the Worker. Set once, rarely touched.
+- Optional push-to-deploy: connect the repo via Pages Git integration in the Cloudflare dashboard (direct-upload projects generally can't be converted in place — would need a new project + moving domains/secrets).
 
 ## Conventions
 
