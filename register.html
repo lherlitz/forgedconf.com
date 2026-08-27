@@ -83,6 +83,11 @@
         <label class="form-label">PHONE (optional)</label>
         <input type="tel" class="form-input" id="phone" placeholder="555-1234" autocomplete="tel">
       </div>
+      <!-- Honeypot: hidden from humans, filled by bots. Server silently drops these. -->
+      <div class="form-group" style="position:absolute; left:-9999px;" aria-hidden="true">
+        <label for="website">Website</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
     </div>
 
     <div class="info-box">
@@ -222,8 +227,7 @@
     </div>
 
     <div class="info-box" id="paymentNote">
-      <strong>>> PAYMENT:</strong> You'll be redirected to a secure checkout to complete your registration.
-      <br><span style="color: var(--fg-dim); font-size: 0.95rem;">(Mock — no real payment will be processed)</span>
+      <strong>> PAYMENT:</strong> Nothing to pay right now. Level Up knights: watch your inbox — your confirmation email includes payment instructions for the $35 kit.
     </div>
 
     <div class="btn-row">
@@ -255,7 +259,7 @@
       <div class="row"><span class="label">Date:</span><span class="value">Nov 7, 2026</span></div>
       <div class="row"><span class="label">Time:</span><span class="value">9AM - 2PM</span></div>
       <div class="row"><span class="label">Location:</span><span class="value">Life Chapel Toledo</span></div>
-      <div class="row"><span class="label">Confirmation:</span><span class="value" id="confId">—</span></div>
+      <div class="row" id="confIdRow"><span class="label">Confirmation:</span><span class="value" id="confId">—</span></div>
     </div>
 
     <div class="confirm-next-steps">
@@ -394,12 +398,34 @@
   }
 
   // === ACCEPT QUEST ===
-  function acceptQuest() {
-    const confId = 'FRGD-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-    document.getElementById('confName').textContent = `${state.firstName} ${state.lastName}`;
-    document.getElementById('confPath').textContent = pathInfo[state.path].name;
-    document.getElementById('confId').textContent = confId;
-    goToScreen('complete');
+  async function acceptQuest() {
+    const btn = document.querySelector('#screen-confirm .step-btn.primary');
+    btn.disabled = true;
+    btn.textContent = 'ACCEPTING...';
+    try {
+      const resp = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name: state.firstName,
+          last_name: state.lastName,
+          email: state.email,
+          phone: state.phone,
+          path: state.path,
+          website: document.getElementById('website').value
+        })
+      });
+      const data = await resp.json().catch(() => ({}));
+      if (!resp.ok || !data.ok) throw new Error(data.error || 'Registration failed.');
+      document.getElementById('confName').textContent = `${state.firstName} ${state.lastName}`;
+      document.getElementById('confPath').textContent = pathInfo[state.path].name;
+      document.getElementById('confIdRow').style.display = 'none';
+      goToScreen('complete');
+    } catch (err) {
+      alert('> The quest could not be recorded: ' + err.message + ' Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'ACCEPT QUEST';
+    }
   }
 
   // === TYPEWRITER ===

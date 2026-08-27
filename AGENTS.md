@@ -29,7 +29,8 @@ Static marketing + registration site for the one-day men's conference (Nov 7, 20
 
 ## Pitfalls
 
-- **Registration is a mock.** `register.html` generates a fake `FRGD-XXXXXX` confirmation ID and the payment note explicitly says no real payment is processed. The planned backend is Planning Center (Church Center); do not wire real checkout or claim registrations are real without asking.
+- **Registration backend (real, 2026-08-27).** `register.html` POSTs to `/api/register` (Cloudflare Pages Function in `functions/api/register.js`), which resolves the person in Planning Center People by email (creates a profile if none) and checks the Free or Forged Kit box on the "Forged" tab (field definition `1104573`). Requires `PCO_PAT_ID` + `PCO_PAT_SECRET` env vars (secrets) on the Pages project. Cloudflare chosen over Vercel because its free tier permits commercial use. Payment is NOT collected online: after the list refresh (on-registration trigger + 15-min backstop cron), PCO automations email each registrant a confirmation with payment instructions; the kit is $40 at the door while supplies last.
+- **Deploy is split-brained until cutover.** GitHub Pages currently serves the domain and knows nothing about `/api/register`: pushing `register.html` to `origin/main` before Cloudflare Pages serves forgedconf.com would ship a broken registration form. Deploy to Cloudflare Pages first, point forgedconf.com at Cloudflare (Namecheap nameservers -> Cloudflare, then custom domain on the Pages project), then push.
 - No `.gitignore` — `.DS_Store` is untracked; don't commit it.
 - The site is public and church-facing: no AI-tooling references, no ticket IDs, no dev jargon in page copy.
-- Speakers/agenda facts (Grant Perry, Kristian Vaculik, Pastor Jonathan Davis; $35 kit, $40 at door, Oct 17 pre-order deadline) are real event details — verify changes with Luc before editing.
+- Speakers/agenda facts (Grant Perry, Kristian Vaculik, Pastor Jonathan Perry; $35 kit, $40 at door, Oct 17 pre-order deadline) are real event details — verify changes with Luc before editing.

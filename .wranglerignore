@@ -1,0 +1,6 @@
+AGENTS.md
+api/
+design/
+workers/
+.hermes/
+.wranglerignore
