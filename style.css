@@ -461,7 +461,16 @@ section { padding: 5rem 0; position: relative; }
   color: var(--fg-muted);
   letter-spacing: 0.1em;
 }
-.arc-arrow { align-self: center; color: var(--green-mid); font-family: 'VT323', monospace; font-size: 1.5rem; }
+.arc-arrow {
+  /* Align with the 60px badges, not the full step height (badge + label). */
+  align-self: flex-start;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  color: var(--green-mid);
+  font-family: 'VT323', monospace;
+  font-size: 1.5rem;
+}
 
 /* === SESSIONS === */
 .sessions { background: var(--bg); }
