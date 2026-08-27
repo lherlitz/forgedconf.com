@@ -89,9 +89,14 @@ export async function onRequestPost(context) {
   }
 
   try {
-    // 1) Resolve the person by email address.
+    // 1) Resolve the person by email address. Prefer the profile where this
+    //    is the PRIMARY email (the person most likely registering), then
+    //    fall back to any profile holding the address (shared inboxes).
     const q = encodeURIComponent(email);
-    const hits = await pco('/emails?where[address]=' + q + '&per_page=1');
+    let hits = await pco('/emails?where[address]=' + q + '&where[primary]=true&per_page=1');
+    if (!hits || !hits.data || !hits.data.length) {
+      hits = await pco('/emails?where[address]=' + q + '&per_page=1');
+    }
     let personId = null;
 
     if (hits && hits.data && hits.data.length) {
