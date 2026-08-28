@@ -38,4 +38,4 @@ Deploys go to **Cloudflare Pages** (project `forgedconf`), NOT GitHub Pages. `gi
 - **Deploy is split-brained until cutover.** GitHub Pages currently serves the domain and knows nothing about `/api/register`: pushing `register.html` to `origin/main` before Cloudflare Pages serves forgedconf.com would ship a broken registration form. Deploy to Cloudflare Pages first, point forgedconf.com at Cloudflare (Namecheap nameservers -> Cloudflare, then custom domain on the Pages project), then push.
 - No `.gitignore` — `.DS_Store` is untracked; don't commit it.
 - The site is public and church-facing: no AI-tooling references, no ticket IDs, no dev jargon in page copy.
-- Speakers/agenda facts (Grant Perry, Kristian Vaculik, Pastor Jonathan Perry; $35 kit, $40 at door, Oct 17 pre-order deadline) are real event details — verify changes with Luc before editing.
+- Speakers/agenda facts (Grant Perry, Kristian Vaculik, Pastor Jonathan Perry, Pastor Jonathan Davis; $35 kit, $40 at door, Oct 17 pre-order deadline) are real event details — verify changes with Luc before editing.
