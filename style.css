@@ -610,6 +610,7 @@ section { padding: 5rem 0; position: relative; }
   margin-right: auto;
 }
 .activity-card {
+  min-width: 0; /* prevent aspect-ratio min-size from blowing out 1fr tracks on narrow screens */
   text-align: center;
   padding: 2rem 1rem;
   background: var(--bg-card);
