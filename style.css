@@ -633,7 +633,7 @@ section { padding: 5rem 0; position: relative; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  max-width: 950px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .price-card {
@@ -881,6 +881,12 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg);
   display: grid;
   gap: 1.2rem;
   margin-bottom: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .path-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 .path-card {
   background: var(--bg-card);

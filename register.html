@@ -148,6 +148,35 @@
           <li>Branded Water Bottle</li>
         </ul>
       </div>
+
+      <!-- Sponsorship -->
+      <div class="path-card" data-path="sponsorship" onclick="selectPath('sponsorship')">
+        <div class="path-header">
+          <div class="path-icon">🛡️</div>
+          <div class="path-info">
+            <div class="path-name">SPONSOR</div>
+            <div class="path-price">$100</div>
+          </div>
+        </div>
+        <div class="path-desc">Support the quest. Your name or company recognized.</div>
+        <ul class="path-features">
+          <li>Help make this event possible</li>
+          <li>Your name or company on sponsor list</li>
+          <li>No physical kit or attendance required</li>
+          <li>Invest in men's ministry</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Sponsorship Name Field (shown only when sponsorship selected) -->
+    <div id="sponsorshipNameSection" style="display: none;">
+      <div class="form-card">
+        <div class="form-group">
+          <label class="form-label">SPONSORSHIP DISPLAY NAME(S)</label>
+          <input type="text" class="form-input" id="sponsorshipName" placeholder="Your name or company name...">
+          <div class="form-helper">> How should we recognize you? (e.g., "John Smith", "Smith Family", "Acme Co.")</div>
+        </div>
+      </div>
     </div>
 
     <div class="btn-row">
@@ -281,12 +310,13 @@
   // === STATE ===
   let state = {
     firstName: '', lastName: '', email: '', phone: '',
-    path: '', addons: {}, total: 0
+    path: '', sponsorshipName: '', addons: {}, total: 0
   };
 
   const pathInfo = {
-    free:    { name: 'Free', price: 0 },
-    kit:     { name: 'Level Up', price: 35 }
+    free:         { name: 'Free', price: 0 },
+    kit:          { name: 'Level Up', price: 35 },
+    sponsorship:  { name: 'Sponsor the Quest', price: 100 }
   };
 
   // === SCREEN NAVIGATION ===
@@ -352,13 +382,32 @@
 
     // Reset addon checkboxes
     document.querySelectorAll('.addon-check').forEach(c => c.classList.remove('checked'));
+
+    // Show/hide sponsorship name section
+    const sponsorSection = document.getElementById('sponsorshipNameSection');
+    if (p === 'sponsorship') {
+      sponsorSection.style.display = 'block';
+    } else {
+      sponsorSection.style.display = 'none';
+      document.getElementById('sponsorshipName').value = '';
+    }
   }
 
   function proceedFromPath() {
+    // If sponsorship, validate the name field
+    if (state.path === 'sponsorship') {
+      const name = document.getElementById('sponsorshipName').value.trim();
+      if (!name) {
+        alert('> Please enter a name for the sponsorship recognition.');
+        return;
+      }
+      state.sponsorshipName = name;
+    }
+
     if (state.path === 'kit') {
       goToScreen('levelup');
     } else {
-      // Free - skip level up, go to confirm
+      // Free or sponsorship - skip level up, go to confirm
       goToScreen('confirm');
     }
   }
@@ -378,7 +427,12 @@
     const fullName = `${state.firstName} ${state.lastName}`;
     document.getElementById('sumName').textContent = fullName;
     document.getElementById('sumEmail').textContent = state.email;
-    document.getElementById('sumPath').textContent = pathInfo[state.path].name;
+    
+    let pathDisplay = pathInfo[state.path].name;
+    if (state.path === 'sponsorship' && state.sponsorshipName) {
+      pathDisplay += ` (as "${state.sponsorshipName}")`;
+    }
+    document.getElementById('sumPath').textContent = pathDisplay;
 
     let total = pathInfo[state.path].price;
     document.getElementById('sumReg').textContent = pathInfo[state.path].price === 0 ? 'FREE' : `$${pathInfo[state.path].price}`;
@@ -394,8 +448,17 @@
     state.total = total;
     document.getElementById('sumTotal').textContent = total === 0 ? 'FREE' : `$${total}`;
 
-    // Hide payment note if free
-    document.getElementById('paymentNote').style.display = total === 0 ? 'none' : 'block';
+    // Update payment note based on path
+    const paymentNote = document.getElementById('paymentNote');
+    if (total === 0) {
+      paymentNote.style.display = 'none';
+    } else if (state.path === 'kit') {
+      paymentNote.innerHTML = '<strong>> PAYMENT:</strong> Nothing to pay right now. Level Up knights: watch your inbox — your confirmation email includes payment instructions for the $35 kit.';
+      paymentNote.style.display = 'block';
+    } else if (state.path === 'sponsorship') {
+      paymentNote.innerHTML = '<strong>> PAYMENT:</strong> Nothing to pay right now. Sponsors: watch your inbox — your confirmation email includes payment instructions for the $100 sponsorship.';
+      paymentNote.style.display = 'block';
+    }
   }
 
   // === ACCEPT QUEST ===
@@ -404,17 +467,24 @@
     btn.disabled = true;
     btn.textContent = 'ACCEPTING...';
     try {
+      const payload = {
+        first_name: state.firstName,
+        last_name: state.lastName,
+        email: state.email,
+        phone: state.phone,
+        path: state.path,
+        website: document.getElementById('website').value
+      };
+      
+      // Include sponsorship_name only if path is sponsorship
+      if (state.path === 'sponsorship' && state.sponsorshipName) {
+        payload.sponsorship_name = state.sponsorshipName;
+      }
+
       const resp = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          first_name: state.firstName,
-          last_name: state.lastName,
-          email: state.email,
-          phone: state.phone,
-          path: state.path,
-          website: document.getElementById('website').value
-        })
+        body: JSON.stringify(payload)
       });
       const data = await resp.json().catch(() => ({}));
       if (!resp.ok || !data.ok) throw new Error(data.error || 'Registration failed.');
@@ -447,11 +517,12 @@
 
   // === RESET ===
   function resetQuest() {
-    state = { firstName: '', lastName: '', email: '', phone: '', path: '', addons: {}, total: 0 };
+    state = { firstName: '', lastName: '', email: '', phone: '', path: '', sponsorshipName: '', addons: {}, total: 0 };
     document.querySelectorAll('input').forEach(i => i.value = '');
     document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
     document.querySelectorAll('.addon-check').forEach(c => c.classList.remove('checked'));
     document.getElementById('pathNext').disabled = true;
+    document.getElementById('sponsorshipNameSection').style.display = 'none';
     goToScreen('character');
   }
 
