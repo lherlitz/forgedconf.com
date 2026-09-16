@@ -4,8 +4,8 @@ Static marketing + registration site for the one-day men's conference (Nov 7, 20
 
 ## Layout
 
-- `index.html` — landing page (`<body class="landing">`): hero with typewriter quest dialog, about, 4 sessions, agenda timeline, speakers, activities, merch, registration pricing.
-- `register.html` — multi-screen registration flow (`<body class="register">`): start → character (name/email/phone) → path (free / $35 kit) → level-up add-ons → confirm → complete. All client-side, single inline `<script>`.
+- `index.html` — landing page (`<body class="landing">`): hero with typewriter quest dialog, about, 4 sessions, agenda timeline, speakers, activities, merch, registration pricing (free / $35 kit / $100 sponsorship).
+- `register.html` — multi-screen registration flow (`<body class="register">`): start → character (name/email/phone) → path (free / $35 kit / $100 sponsorship) → level-up add-ons → confirm → complete. All client-side, single inline `<script>`. Sponsorship path collects display name(s) for recognition.
 - `style.css` — shared stylesheet for both pages; page-specific rules scoped under `body.landing` / `body.register`.
 - `images/` — forged-og.png (OG/social), forged-thequest-logo-light.png, grant-perry.png, favicons, apple-touch-icon.
 - `CNAME` — `forgedconf.com` (GitHub Pages custom domain).
@@ -34,7 +34,7 @@ Deploys go to **Cloudflare Pages** (project `forgedconf`), NOT GitHub Pages. `gi
 
 ## Pitfalls
 
-- **Registration backend (real, 2026-08-27).** `register.html` POSTs to `/api/register` (Cloudflare Pages Function in `functions/api/register.js`), which resolves the person in Planning Center People by email (creates a profile if none) and checks the Free or Forged Kit box on the "Forged" tab (field definition `1104573`). Requires `PCO_PAT_ID` + `PCO_PAT_SECRET` env vars (secrets) on the Pages project. Cloudflare chosen over Vercel because its free tier permits commercial use. Payment is NOT collected online: after the list refresh (on-registration trigger + 15-min backstop cron), PCO automations email each registrant a confirmation with payment instructions; the kit is $40 at the door while supplies last.
+- **Registration backend (real, 2026-08-27).** `register.html` POSTs to `/api/register` (Cloudflare Pages Function in `functions/api/register.js`), which resolves the person in Planning Center People by email (creates a profile if none) and checks the Free, Forged Kit, or Sponsorship box on the "Forged" tab (field definition `1104573`). For sponsorship registrations, also writes the display name(s) to the "Sponsorship Name" string field (field definition `1114321`). Requires `PCO_PAT_ID` + `PCO_PAT_SECRET` env vars (secrets) on the Pages project. PATH_VALUES maps `{ free: 'Free', kit: 'Forged Kit', sponsorship: 'Sponsorship' }`; FORGED_LIST_IDS maps `{ free: '5315047', kit: '5315090', sponsorship: '5373556' }` (2026 Forged Free / Kit / Sponsorship lists). Cloudflare chosen over Vercel because its free tier permits commercial use. Payment is NOT collected online: after the list refresh (on-registration trigger + 15-min backstop cron), PCO automations email each registrant a confirmation with payment instructions; the kit is $40 at the door while supplies last, sponsorships are $100.
 - **Deploy is split-brained until cutover.** GitHub Pages currently serves the domain and knows nothing about `/api/register`: pushing `register.html` to `origin/main` before Cloudflare Pages serves forgedconf.com would ship a broken registration form. Deploy to Cloudflare Pages first, point forgedconf.com at Cloudflare (Namecheap nameservers -> Cloudflare, then custom domain on the Pages project), then push.
 - No `.gitignore` — `.DS_Store` is untracked; don't commit it.
 - The site is public and church-facing: no AI-tooling references, no ticket IDs, no dev jargon in page copy.

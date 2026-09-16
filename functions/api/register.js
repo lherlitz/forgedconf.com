@@ -9,8 +9,9 @@
 
 const PCO = 'https://api.planningcenteronline.com/people/v2';
 const FORGED_FIELD_ID = '1104573'; // People > Fields tab "Forged" > checkboxes field "2026"
-const PATH_VALUES = { free: 'Free', kit: 'Forged Kit' }; // must match field_options exactly
-const FORGED_LIST_IDS = { free: '5315047', kit: '5315090' }; // 2026 Forged Free / 2026 Forged Kit
+const PATH_VALUES = { free: 'Free', kit: 'Forged Kit', sponsorship: 'Sponsorship' }; // must match field_options exactly
+const FORGED_LIST_IDS = { free: '5315047', kit: '5315090', sponsorship: '5373556' }; // 2026 Forged Free / Kit / Sponsorship
+const SPONSORSHIP_NAME_FIELD_ID = '1114321'; // People > Fields tab "Forged" > string field "Sponsorship Name"
 const LIST_RUN_DELAY_MS = 15000; // let PCO index the new field_data before refreshing lists
 
 function json(status, body) {
@@ -54,10 +55,16 @@ export async function onRequestPost(context) {
   const last = String(body.last_name || '').trim().slice(0, 50);
   const email = String(body.email || '').trim().toLowerCase().slice(0, 100);
   const path = body.path;
+  const sponsorshipName = String(body.sponsorship_name || '').trim().slice(0, 200);
   const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   if (!first || !last || !emailOk || !PATH_VALUES[path]) {
     return json(422, { ok: false, error: 'Missing or invalid registration details.' });
+  }
+
+  // Require sponsorship_name when path is sponsorship
+  if (path === 'sponsorship' && !sponsorshipName) {
+    return json(422, { ok: false, error: 'Sponsorship display name is required.' });
   }
 
   if (!env.PCO_PAT_ID || !env.PCO_PAT_SECRET) {
@@ -147,6 +154,50 @@ export async function onRequestPost(context) {
         }),
       });
       newlyChecked = true;
+    }
+
+    // 5) For sponsorship path: write the sponsorship display name(s) to the
+    //    dedicated string field (field definition 1114321 "Sponsorship Name").
+    if (path === 'sponsorship' && sponsorshipName) {
+      // Check if the field_data already exists for this field definition
+      const nameFieldData =
+        existing &&
+        existing.data &&
+        existing.data.find(
+          (d) =>
+            d.relationships &&
+            d.relationships.field_definition &&
+            d.relationships.field_definition.data &&
+            d.relationships.field_definition.data.id === SPONSORSHIP_NAME_FIELD_ID
+        );
+
+      if (nameFieldData && nameFieldData.id) {
+        // PATCH existing field_data
+        await pco('/people/' + personId + '/field_data/' + nameFieldData.id, {
+          method: 'PATCH',
+          body: JSON.stringify({
+            data: {
+              type: 'FieldDatum',
+              id: nameFieldData.id,
+              attributes: { value: sponsorshipName },
+            },
+          }),
+        });
+      } else {
+        // POST new field_data
+        await pco('/people/' + personId + '/field_data', {
+          method: 'POST',
+          body: JSON.stringify({
+            data: {
+              type: 'FieldDatum',
+              attributes: {
+                field_definition_id: SPONSORSHIP_NAME_FIELD_ID,
+                value: sponsorshipName,
+              },
+            },
+          }),
+        });
+      }
     }
 
     if (newlyChecked && env.RUN_LIST_REFRESH === 'true') {
