@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FORGED 2026: THE QUEST — Register | Life Chapel Toledo</title>
-<meta name="description" content="Register for FORGED 2026: The Quest — Saturday, November 7, 2026 · 9AM-2PM · Life Chapel Toledo. Free to attend; Level Up for $35 includes the full Forged Kit.">
+<meta name="description" content="Register for FORGED 2026: The Quest. Saturday, November 7, 2026, 9AM-2PM, Life Chapel Toledo. Free to attend. The Forged Kit is sold out.">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
@@ -91,7 +91,7 @@
     </div>
 
     <div class="info-box">
-      <strong>>> NOTE:</strong> Everyone gets a free notebook & pen at the door. Level up to get the full Forged Kit.
+      <strong>>> NOTE:</strong> Everyone gets a free notebook & pen at the door. The Forged Kit is sold out.
     </div>
 
     <div class="btn-row">
@@ -108,11 +108,12 @@
   <div class="container">
     <div class="screen-label">- - CHOOSE YOUR PATH - -</div>
     <h2 class="screen-title">Select Your <span class="accent">Quest</span></h2>
-    <p class="screen-sub">Every man may attend free. Will you level up?</p>
+    <p class="screen-sub">Every man may attend free. The Forged Kit is sold out.</p>
 
     <div class="path-grid">
       <!-- Free -->
       <div class="path-card" data-path="free" onclick="selectPath('free')">
+        <div class="path-badge">RECOMMENDED</div>
         <div class="path-header">
           <div class="path-icon">🗡️</div>
           <div class="path-info">
@@ -128,9 +129,9 @@
         </ul>
       </div>
 
-      <!-- Level Up (Kit) -->
-      <div class="path-card" data-path="kit" onclick="selectPath('kit')">
-        <div class="path-badge">RECOMMENDED</div>
+      <!-- Level Up (Kit): orders are closed. Card stays visible, but it cannot be selected. -->
+      <div class="path-card sold-out" data-path="kit" aria-disabled="true">
+        <div class="path-badge sold-out">SOLD OUT</div>
         <div class="path-header">
           <div class="path-icon">⚔️</div>
           <div class="path-info">
@@ -138,7 +139,7 @@
             <div class="path-price">$35</div>
           </div>
         </div>
-        <div class="path-desc">Register + receive the full Forged Kit on arrival.</div>
+        <div class="path-desc">The Forged Kit is sold out.</div>
         <ul class="path-features">
           <li>Everything in Free</li>
           <li>Forged Canvas Bag</li>
@@ -193,7 +194,7 @@
   <div class="container">
     <div class="screen-label">- - LEVEL UP - -</div>
     <h2 class="screen-title">Your <span class="accent">Forged Kit</span></h2>
-    <p class="screen-sub">Here's what you'll receive on November 7.</p>
+    <p class="screen-sub">The Forged Kit is sold out.</p>
 
     <div class="kit-preview">
       <h3>FORGED KIT CONTENTS</h3>
@@ -228,12 +229,11 @@
     -->
 
     <div class="info-box">
-      <strong>>> PRE-ORDER DEADLINE:</strong> October 17. After that, kits available at the door while supplies last ($40).
+      <strong>>> SOLD OUT:</strong> The Forged Kit is sold out. Pre-orders are closed, and kits are not available at the door.
     </div>
 
     <div class="btn-row">
       <button class="step-btn secondary" onclick="goToScreen('path')">BACK</button>
-      <button class="step-btn primary" onclick="goToScreen('confirm')">CONTINUE</button>
     </div>
   </div>
 </div>
@@ -257,11 +257,11 @@
     </div>
 
     <div class="info-box" id="paymentNote">
-      <strong>> PAYMENT:</strong> Nothing to pay right now. Level Up knights: watch your inbox — your confirmation email includes payment instructions for the $35 kit.
+      <strong>> PAYMENT:</strong> Nothing to pay right now. Watch your inbox for your confirmation email.
     </div>
 
     <div class="btn-row">
-      <button class="step-btn secondary" onclick="goToScreen('levelup')">BACK</button>
+      <button class="step-btn secondary" onclick="goToScreen('path')">BACK</button>
       <button class="step-btn primary" onclick="acceptQuest()">ACCEPT QUEST</button>
     </div>
   </div>
@@ -330,6 +330,8 @@
   };
 
   function goToScreen(name) {
+    // The kit detail screen is closed. Any leftover link lands back on path choice.
+    if (name === 'levelup' || (name === 'confirm' && state.path === 'kit')) name = 'path';
     screens.forEach(s => document.getElementById('screen-' + s).classList.remove('active'));
     document.getElementById('screen-' + name).classList.add('active');
     window.scrollTo(0, 0);
@@ -374,6 +376,7 @@
 
   // === PATH SELECTION ===
   function selectPath(p) {
+    if (p === 'kit') return;
     state.path = p;
     state.addons = {};
     document.querySelectorAll('.path-card').forEach(c => c.classList.remove('selected'));
@@ -404,12 +407,8 @@
       state.sponsorshipName = name;
     }
 
-    if (state.path === 'kit') {
-      goToScreen('levelup');
-    } else {
-      // Free or sponsorship - skip level up, go to confirm
-      goToScreen('confirm');
-    }
+    if (state.path === 'kit') return;
+    goToScreen('confirm');
   }
 
   // === ADD-ONS ===
@@ -453,7 +452,7 @@
     if (total === 0) {
       paymentNote.style.display = 'none';
     } else if (state.path === 'kit') {
-      paymentNote.innerHTML = '<strong>> PAYMENT:</strong> Nothing to pay right now. Level Up knights: watch your inbox — your confirmation email includes payment instructions for the $35 kit.';
+      paymentNote.innerHTML = '<strong>> SOLD OUT:</strong> The Forged Kit is sold out. Please register for the Free path.';
       paymentNote.style.display = 'block';
     } else if (state.path === 'sponsorship') {
       paymentNote.innerHTML = '<strong>> PAYMENT:</strong> Nothing to pay right now. Sponsors: watch your inbox — your confirmation email includes payment instructions for the $100 sponsorship.';
@@ -463,6 +462,10 @@
 
   // === ACCEPT QUEST ===
   async function acceptQuest() {
+    if (state.path === 'kit') {
+      alert('> The Forged Kit is sold out. Please register for the Free path.');
+      return;
+    }
     const btn = document.querySelector('#screen-confirm .step-btn.primary');
     btn.disabled = true;
     btn.textContent = 'ACCEPTING...';
@@ -487,13 +490,13 @@
         body: JSON.stringify(payload)
       });
       const data = await resp.json().catch(() => ({}));
-      if (!resp.ok || !data.ok) throw new Error(data.error || 'Registration failed.');
+      if (!resp.ok || !data.ok) throw new Error(data.error || 'The quest could not be recorded. Please try again.');
       document.getElementById('confName').textContent = `${state.firstName} ${state.lastName}`;
       document.getElementById('confPath').textContent = pathInfo[state.path].name;
       document.getElementById('confIdRow').style.display = 'none';
       goToScreen('complete');
     } catch (err) {
-      alert('> The quest could not be recorded: ' + err.message + ' Please try again.');
+      alert('> ' + (err.message || 'The quest could not be recorded. Please try again.'));
       btn.disabled = false;
       btn.textContent = 'ACCEPT QUEST';
     }
