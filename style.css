@@ -704,6 +704,36 @@ section { padding: 5rem 0; position: relative; }
 }
 .price-btn:hover { background: var(--green-bright); box-shadow: 0 4px 0 var(--green-mid); }
 .price-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--green-dim); }
+.price-card.sold-out:hover { border-color: var(--border); }
+.price-card.sold-out h3,
+.price-card.sold-out .price-amount,
+.price-card.sold-out .desc,
+.price-card.sold-out .price-features {
+  opacity: 0.45;
+  filter: grayscale(0.9);
+}
+.price-card.sold-out::before {
+  content: 'SOLD OUT';
+  position: absolute;
+  top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--fg-muted);
+  color: var(--bg);
+  font-family: 'Times New Pixel', 'Dogica Pixel', monospace;
+  font-size: 0.6rem;
+  padding: 0.3rem 0.8rem;
+  letter-spacing: 0.05em;
+}
+.price-btn.is-disabled,
+.price-btn.is-disabled:hover,
+.price-btn.is-disabled:active {
+  background: transparent;
+  color: var(--fg-muted);
+  border: 2px solid var(--border);
+  box-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none;
+}
 
 .reg-note {
   text-align: center;
@@ -897,6 +927,20 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg);
   position: relative;
 }
 .path-card:hover { border-color: var(--green-dim); transform: translateY(-2px); }
+.path-card.sold-out,
+.path-card.sold-out:hover {
+  cursor: not-allowed;
+  border-color: var(--border);
+  transform: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+.path-card.sold-out .path-header,
+.path-card.sold-out .path-desc,
+.path-card.sold-out .path-features {
+  opacity: 0.4;
+  filter: grayscale(1);
+}
 .path-card.selected { border-color: var(--green); box-shadow: 0 0 25px rgba(206,241,123,0.1); }
 .path-card.selected::after {
   content: '✓ SELECTED';
@@ -906,6 +950,12 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg);
   font-size: 0.5rem;
   color: var(--green);
 }
+.path-card.sold-out.selected,
+.path-card.sold-out.selected:hover {
+  border-color: var(--border);
+  box-shadow: none;
+}
+.path-card.sold-out.selected::after { content: none; }
 
 .path-header {
   display: flex;
@@ -965,6 +1015,11 @@ footer p { font-family: 'VT323', monospace; font-size: 1.1rem; color: var(--fg);
   padding: 0.2rem 0.5rem;
   letter-spacing: 0.05em;
   margin-bottom: 0.5rem;
+}
+.path-badge.sold-out {
+  background: var(--fg-muted);
+  color: var(--bg);
+  letter-spacing: 0.08em;
 }
 
 /* === REGISTER: kit preview === */

@@ -51,6 +51,15 @@ export async function onRequestPost(context) {
     return json(200, { ok: true });
   }
 
+  // T-shirt orders for the Forged Kit are placed. Reject new kit registrations
+  // before any Planning Center call so existing kit rows and list IDs stay as they are.
+  if (body.path === 'kit') {
+    return json(409, {
+      ok: false,
+      error: 'The Forged Kit is sold out. Please register for the Free path.',
+    });
+  }
+
   const first = String(body.first_name || '').trim().slice(0, 50);
   const last = String(body.last_name || '').trim().slice(0, 50);
   const email = String(body.email || '').trim().toLowerCase().slice(0, 100);
